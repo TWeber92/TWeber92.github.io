@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 gemspec
-gem 'rake', '~> 12.3', '>= 12.3.3'
+spec.add_dependency "rake", ">= 12.3.3"
