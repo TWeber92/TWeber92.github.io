@@ -1,7 +1,7 @@
 ---
 layout: posts
 permalink: /data-wrangling/
-title: "Data Wrangling projects"
+title: "Application Development Projects"
 author_profile: true
 header:
   image: "/images/OlympiaFair.jpg"
