@@ -7,8 +7,6 @@
 
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
-gems:
-  - jekyll-font-awesome-sass
 
 # Site Settings
 locale                   : "en-US"
@@ -66,6 +64,8 @@ naver_site_verification  :
 # Social Sharing
 twitter:
   username              : "itechtad"
+instagram:
+  username              : "tadweber92"
 facebook:
   username               :
   app_id                 :
