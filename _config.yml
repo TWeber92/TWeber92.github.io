@@ -62,7 +62,9 @@ naver_site_verification  :
 
 # Social Sharing
 twitter:
-  username               :
+  username              : "itechtad" 
+instagram:
+  username              : "tadweber92"
 facebook:
   username               :
   app_id                 :
@@ -97,7 +99,7 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : # "TWeber92"
+  github           : "TWeber92"
   gitlab           :
   google_plus      :
   keybase          :
@@ -191,7 +193,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
-  # - jekyll-feed
+  - jekyll-feed
   - jemoji
 
 # mimic GitHub Pages with --safe
@@ -199,7 +201,7 @@ whitelist:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
-  # - jekyll-feed
+  - jekyll-feed
   - jemoji
 
 
