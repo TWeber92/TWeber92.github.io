@@ -160,8 +160,26 @@ readOnly/>
 Water Access
 </label>
 ```
-
-
+Above is a readOnly input, it is not available. however for minipulable inputs you will see a 
+```python
+</label>
+<input type="checkbox"
+className="checkbox"
+name="waterAccess"
+checked={this.state.campWater}
+onChange={this.campWaterToggle}/>
+</div>
+```
+in addition to...
+```python
+campWaterToggle = (evt) => {
+    this.setState({
+      campWater: !this.state.campWater
+    });
+    console.log(!this.state.campWater)
+  }
+  ```
+### Presentation
 ![alt]({{ site.url }}{{ site.baseurl }}/images/AllCamp2.jpg)
 
 
