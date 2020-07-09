@@ -8,14 +8,15 @@ excerpt: "FullStack, Development, Application, MERN"
 mathjax: "true"
 ---
 
-# M.E.R.N
+# M.E.R.N.
 
 
 ### MySQL - Express.js - React.js - Node.js
 
 ## Express.js
 
-[Express](https://expressjs.com/) stands as an extremely flexible backend framework. Communicating with the front end client doesnt take much minipulation from the developer. While laying a framework for Node.js, it develops a fast and minimalist version of an un-opinionated modern application.
+[Express](https://expressjs.com/) stands as an extremely flexible backend framework. Communicating with the front end client doesnt take much minipulation from the developer. While laying a web-framework for Node.js, helping with HTTP requests, and allowing the developer to create the necessary middleware, it maintains being fast, minimalist, and, un-opinionated.
+
 ```python
 var express = require("express");
 var router = express.Router();
@@ -70,13 +71,13 @@ Generates Three Folders:
 2. migrations - contains no files
 3. seeders - contains no files
 
-In the case you database is already populated by utilizing the CLI you can generate a model file that is prepoulated with all of the table data that is requested.
+In the case your database is already populated by utilizing the CLI you can generate a model file that is prepopulated with all of the table data that is requested.
 
 ```python
     sequelize-auto -h "IP/Hostname for the database (required)" -d "Database name (required)" -u "Username for database" -x "Password for database" -o "What directory to place the models" -t "Comma-separated names of tables to import"
 ```
 
-While Utilizing the previously installed Sequelize running your server 
+While utilizing the previously installed Sequelize running your server 
 ```python
 npm start
 ```
@@ -88,7 +89,8 @@ npm start
  ```
 ## Node.js
 
-Another library from JavaScript, [Node.js](https://nodejs.org/en/) proves itself extremely valuable in this stack application. The development environment Node provides allows easy implementation of routing. By using the "app" object corresponding to HTTP Express provides the route is then defined by using the methods of the "app" object. Once the request is received the object specifies a callback function.
+A JavaScript runtime environment for servers and applications, [Node.js](https://nodejs.org/en/) the cross-platform proved itself to be extremely valuable in this stack application. Built on Google's V8 JavaScript engine, Node.js is efficient and light weight making a perfect environment for Express.js, which is going handle routing the HTTP request coming from the clients.
+
 ```python
 var express = require("express");
 var router = express.Router();
@@ -101,7 +103,7 @@ router.get("/", function(req, res, next) {
 
 ## React 
 
-Chosing [React](https://reactjs.org/docs/getting-started.html) For the front end framework set out to be a challenging pursuit. Although this project only breaks the surface of its potential, it shows how well it works within this MERN stack application  when utilizing the four CRUD operations. One extremely significant feature that is important to point out is the ability to create and store a function with the ability to call it at any time in any component as long at the imported location is accurate. Creating views or components that can communicate with the controller with React take a moment to wrap your head around especially when it is a single page application. The components built in the client side will eventually be imported into one file and pushed into the single html file which in turns displays the user interface, these files are rendered with the help of JSX. Although there is many similarities to javascript it is slightly altered, so it is important to study up on those differences. With that being said, it is important to focus on the request function going to the controller but learning how to write the necessary JSX to push and pull to the database can be the real obstacle.
+Chosing [React](https://reactjs.org/docs/getting-started.html) for the front end framework set out to be a challenging pursuit. Although this project only breaks the surface of its potential, it shows how well it works within this MERN stack application  that employs the four CRUD operations. A significant feature that is important to point out is the ability to create a component, and how these components have endless possibilities. While most components were used in this project to display pages in the user interface, another component was created with a sole purpose of being a navigation bar. The components built in the client side will eventually be imported into one file and pushed into the single html file (single page application) which in turn displays the user interface. There is many similarities to javascript, but the composed rendered language used in react is JSX, it is slightly altered, so it is important to study up on those differences. With that being said, it is important to focus on the request function going to the controller but learning how to write the necessary JSX to push and pull to the database can sometimes be the real obstacle.
 ``` python
 <div className="form-group">
 <label htmlFor="address" className="h5 mr-3 font-weight-normal">
