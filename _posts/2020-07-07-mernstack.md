@@ -3,7 +3,7 @@ title: "MERN Stack CRUD Operations Application"
 date: 2020-07-07
 tags: [mysql, express.js, react.js, node.js]
 header:
-  image: "/images/AllCamp.jpg"
+  image: "/images/ReactBanner.jpg"
 excerpt: "FullStack, Development, Application, MERN"
 mathjax: "true"
 ---
@@ -159,6 +159,9 @@ readOnly/>
 Water Access
 </label>
 ```
+
+
+![alt]({{ site.url }}{{ site.baseurl }}/images/AllCamp.jpg)
 
 
 
