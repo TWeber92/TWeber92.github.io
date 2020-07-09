@@ -57,7 +57,7 @@ router.post("/", function(req, res, next) {
       },
 ```
 
-## MySql (img)
+## MySQL (img)
 
 Setting up your application using [MySQL](https://dev.mysql.com/downloads/installer/) as your database management tool. Combining with the [Sequelize CLI](https://github.com/sequelize/cli) creates a seemless way to integrate data to and from your application
 
