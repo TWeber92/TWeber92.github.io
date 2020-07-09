@@ -13,7 +13,7 @@ mathjax: "true"
 
 ### MySQL - Express.js - React.js - Node.js
 
-## Express.js (img)
+## Express.js
 
 [Express](https://expressjs.com/) stands as an extremely flexible backend framework. Communicating with the front end client doesnt take much minipulation from the developer. While laying a framework for Node.js, it develops a fast and minimalist version of an un-opinionated modern application.
 ```python
@@ -57,7 +57,7 @@ router.post("/", function(req, res, next) {
       },
 ```
 
-## MySQL (img)
+## MySQL 
 
 Setting up your application using [MySQL](https://dev.mysql.com/downloads/installer/) as your database management tool. Combining with the [Sequelize CLI](https://github.com/sequelize/cli) creates a seemless way to integrate data to and from your application
 
