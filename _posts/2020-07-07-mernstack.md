@@ -100,7 +100,6 @@ router.get("/", function(req, res, next) {
 ```
 
 ## React 
-<i class="fab fa-fw fa-github" aria-hidden="true"></i>
 
 Chosing React For the front end framework set out to be a challenging pursuit. Although this project only breaks the surface of its potential, it shows how well it works within this MERN stack application  when utilizing the four CRUD operations. One extremely significant feature that is important to point out is the ability to create and store a function with the ability to call it at any time in any component as long at the imported location is accurate. Creating views or components that can communicate with the controller with React take a moment to wrap your head around especially when it is a single page application. The components built in the client side will eventually be imported into one file and pushed into the single html file which in turns displays the user interface, these files are rendered with the help of JSX. Although there is many similarities to javascript it is slightly altered, so it is important to study up on those differences. With that being said, it is important to focus on the request function going to the controller but learning how to write the necessary JSX to push and pull to the database can be the real obstacle.
 ``` python
@@ -160,7 +159,7 @@ readOnly/>
 Water Access
 </label>
 ```
-Above is a readOnly input, it is not available. however for minipulable inputs you will see a 
+Above is a readOnly input, it is not available for selection. However for manipulable inputs you will see a 
 ```python
 </label>
 <input type="checkbox"
