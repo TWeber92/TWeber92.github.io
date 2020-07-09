@@ -3,7 +3,7 @@ title: "MERN Stack CRUD Operations Application"
 date: 2020-07-07
 tags: [mysql, express.js, react.js, node.js]
 header:
-  image: "/images/AddCamp.jpg"
+  image: "/images/AllCamp.jpg"
 excerpt: "FullStack, Development, Application, MERN"
 mathjax: "true"
 ---
