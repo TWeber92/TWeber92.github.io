@@ -88,7 +88,7 @@ npm start
  ```
 ## Node.js
 
-Another library from JavaScript, Node.js proves itself extremely valuable in this stack application. The development environment Node provides allows easy implementation of routing. By using the "app" object corresponding to HTTP Express provides the route is then defined by using the methods of the "app" object. Once the request is received the object specifies a callback function.
+Another library from JavaScript, [Node.js](https://nodejs.org/en/) proves itself extremely valuable in this stack application. The development environment Node provides allows easy implementation of routing. By using the "app" object corresponding to HTTP Express provides the route is then defined by using the methods of the "app" object. Once the request is received the object specifies a callback function.
 ```python
 var express = require("express");
 var router = express.Router();
@@ -101,7 +101,7 @@ router.get("/", function(req, res, next) {
 
 ## React 
 
-Chosing React For the front end framework set out to be a challenging pursuit. Although this project only breaks the surface of its potential, it shows how well it works within this MERN stack application  when utilizing the four CRUD operations. One extremely significant feature that is important to point out is the ability to create and store a function with the ability to call it at any time in any component as long at the imported location is accurate. Creating views or components that can communicate with the controller with React take a moment to wrap your head around especially when it is a single page application. The components built in the client side will eventually be imported into one file and pushed into the single html file which in turns displays the user interface, these files are rendered with the help of JSX. Although there is many similarities to javascript it is slightly altered, so it is important to study up on those differences. With that being said, it is important to focus on the request function going to the controller but learning how to write the necessary JSX to push and pull to the database can be the real obstacle.
+Chosing [React](https://reactjs.org/docs/getting-started.html) For the front end framework set out to be a challenging pursuit. Although this project only breaks the surface of its potential, it shows how well it works within this MERN stack application  when utilizing the four CRUD operations. One extremely significant feature that is important to point out is the ability to create and store a function with the ability to call it at any time in any component as long at the imported location is accurate. Creating views or components that can communicate with the controller with React take a moment to wrap your head around especially when it is a single page application. The components built in the client side will eventually be imported into one file and pushed into the single html file which in turns displays the user interface, these files are rendered with the help of JSX. Although there is many similarities to javascript it is slightly altered, so it is important to study up on those differences. With that being said, it is important to focus on the request function going to the controller but learning how to write the necessary JSX to push and pull to the database can be the real obstacle.
 ``` python
 <div className="form-group">
 <label htmlFor="address" className="h5 mr-3 font-weight-normal">
