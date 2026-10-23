@@ -1,4 +1,4 @@
-import { event } from "../weber-profile-functions.js";
+import { event } from "../weber-profile-functions/index.js";
 
 export class EventRegister {
   constructor() {
@@ -43,7 +43,7 @@ export class EventRegister {
   async #registerLoadedListener() {
     window.addEventListener(
       "load",
-      async (e) => await event(this.#patchEvent(e, "UI", "update")),
+      async (e) => await event(this.#patchEvent(e, "UI", "post")),
     );
   }
   #patchEvent(e, tagName, id) {

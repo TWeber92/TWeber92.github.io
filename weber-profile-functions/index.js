@@ -1,3 +1,5 @@
+import { handler as updateMenuView } from "./updateMenuView.js";
+import { handler as postUi } from "./postUi.js";
 export const event = async (e) => {
   document.body.style.cursor = "wait";
   const type = e.type;
@@ -7,7 +9,8 @@ export const event = async (e) => {
   const route = `${type}:/${tagName}/${id}`;
 
   const router = {
-    
+    "load:/ui/post": async () => await postUi(e),
+    "click:/button/hamburger": async () => await updateMenuView(e)
   }
   
   try {
