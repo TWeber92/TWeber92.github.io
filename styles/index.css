@@ -15,3 +15,7 @@ body[data-overlay="true"]::before {
   pointer-events: none;
   z-index: 4;
 }
+
+#active {
+  pointer-events: auto;
+}

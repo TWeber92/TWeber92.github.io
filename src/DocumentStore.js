@@ -7,7 +7,7 @@ export class DocumentStore {
   get node() {
     return this.element;
   }
-  
+
   static createHeaderElement(attributes) {
     const { element, options } = DocumentStore.#setOptions(
       document.createElement("header"),
@@ -16,7 +16,14 @@ export class DocumentStore {
     return new DocumentStore(element, options);
   }
 
-  
+  static createNavElement(attributes) {
+    const { element, options } = DocumentStore.#setOptions(
+      document.createElement("nav"),
+      attributes,
+    );
+    return new DocumentStore(element, options);
+  }
+
   static createDivElement(attributes) {
     const { element, options } = DocumentStore.#setOptions(
       document.createElement("div"),
@@ -24,7 +31,6 @@ export class DocumentStore {
     );
     return new DocumentStore(element, options);
   }
-
 
   static #setOptions(element, attributes) {
     if (attributes.data)

@@ -1,3 +1,5 @@
+import { Logger } from "../weber-profile-utility/Logger.js";
+
 export class AppController {
   async APP(req, res, handler) {
     try {
@@ -35,6 +37,6 @@ export class AppController {
     };
     if (map[payload.name]) map[payload.name]();
     else Logger.methods[severity](entry);
-    return;
+    throw error;
   }
 }
