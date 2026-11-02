@@ -7,9 +7,11 @@ export class ProjectView {
   #td;
   #client;
   #option;
-  #entity
+  #dashboard;
+  #card;
+  #entity;
   constructor(data) {
-    this.#entity = {}
+    this.#entity = {};
     this.#html = data;
   }
 
@@ -21,9 +23,10 @@ export class ProjectView {
     this.#project = `
                 <div id="project" hidden></div>`;
     this.#terminal = `
-                <div id="terminal">
-                  <pre>// Waiting for request...</pre>
-                </div>`;
+                <details id="terminal">
+                  <summary>View Raw API Response</summary>
+                  <pre id="output"><code>// Waiting...</code></pre>
+                </details>`;
     this.#table = `
                 <table id="table">
                   <thead id="thead">
@@ -37,14 +40,10 @@ export class ProjectView {
                 <form id="${data.key}">
                   <div>
                     <select name="rest">
-                      <option value="${data.GET}">${data.GET}</option>
-                      <option value="${data.POST}">${data.POST}</option>
-                      <option value="${data.PUT}">${data.PUT}</option>
-                      <option value="${data.DELETE}">${data.DELETE}</option>
                     </select>
                     <select id="endpoint" name="endpoint">
                     </select>
-                    <input type="text" placeholder="{id}" hidden />
+                    <input name="parameter" type="text" placeholder="{id}" hidden />
                     <button type="button">Body</button>
                     <div id="auth" hidden>
                       <label>
@@ -56,7 +55,7 @@ export class ProjectView {
                         <input type="password" name="password" value="smith123" />
                       </label>
                     </div>
-                    <button type="submit"></button>
+                    <button type="submit">submit</button>
                   </div>
                   <div hidden>
                     <textarea name="body"placeholder="Enter raw JSON here...">
@@ -65,6 +64,8 @@ export class ProjectView {
                 </form>`;
     this.#option = `
                 <option id="option"></option>`;
+    this.#dashboard = `<div id="dashboard"></div>`;
+    this.#card = `<div id="card"></div>`;
   }
 
   #to() {
@@ -77,6 +78,8 @@ export class ProjectView {
       td: this.#td,
       client: this.#client,
       option: this.#option,
+      dashboard: this.#dashboard,
+      card: this.#card,
     };
   }
   static from(data) {

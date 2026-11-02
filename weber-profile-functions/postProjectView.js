@@ -20,17 +20,17 @@ export const handler = async (e) => {
   req.body.carousel = responseBody.to(); //CarouselDTO obj
 
   const router = {
-    security: async () =>
+    "spring-security": async () =>
       await springSecurityController.putSpringSecurityProjectInSlide(req, res), //args - button, carousel.slides
-    novels: async () =>
+    "authors-novels": async () =>
       await authorsNovelsController.putAuthorsNovelsProjectInSlide(req, res), //args - button, carousel.slides
-    booking: async () =>
+    "cab-booking": async () =>
       await cabBookingController.putCabBookingProjectInSlide(req, res), //args - button, carousel.slides
-    maven: async () =>
+    "maven-library": async () =>
       await mavenLibraryController.putMavenLibraryProjectInSlide(req, res), //args - button, carousel.slides
-    coinApi: async () =>
+    "coin-api": async () =>
       await coinApiController.putCoinApiProjectInSlide(req, res), //args - button, carousel.slides
-    sitewise: async () =>
+    "iot-sitewise": async () =>
       await sitewiseController.putSitewiseProjectInSlide(req, res), //args - button, carousel.slides
   };
 

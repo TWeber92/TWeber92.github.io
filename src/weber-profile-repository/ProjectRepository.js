@@ -3,20 +3,29 @@ import { DocumentClient } from "../weber-profile-client/DocumentClient.js";
 
 export class ProjectRepository extends DocumentClient {
   constructor(view) {
-    super()
+    super();
     this.#entity = view.entity;
   }
 
   #entity;
 
-  
   getProjectPartsWithHtml(text) {
     return super.GET(text, (t) => HtmlStore.from(t).nodes);
   }
 
-  putTableTogether({ table, schema }) {
-    const thead = table.firstChild;
-    const tbody = table.lastChild;
+  getOption(context) {
+    return super.GET(context, ({ opt, val }) => {
+      const option = opt.cloneNode(false);
+      option.value = val;
+      option.textContent = val;
+      return option;
+    });
+  }
+
+  putTableTogether({ table, schema, i }) {
+    const tableNode = i === 0 ? table : table.cloneNode(true); // deep clone so thead/tbody come along
+    const thead = tableNode.firstChild;
+    const tbody = tableNode.lastChild;
     const trHeadTmpl = thead.firstChild;
     const thTmpl = trHeadTmpl.firstChild;
     const trBodyTmpl = tbody.firstChild;
@@ -39,6 +48,7 @@ export class ProjectRepository extends DocumentClient {
     });
     thead.replaceChildren(headerRow);
     tbody.replaceChildren(bodyRows);
+    return tableNode;
   }
   putEndpointsInSelection(context) {
     super.PUT(context, ({ routes, key, opt }) => {
@@ -46,21 +56,21 @@ export class ProjectRepository extends DocumentClient {
       const form = project.children[key];
       const selection = form.endpoint;
       selection.replaceChildren(
-        ...routes.map((route) => {
-          const option = opt.cloneNode(false);
-          option.value = route;
-          option.textContent = route;
-          return option;
-        }),
+        ...routes.map((route) => this.getOption({ opt, val: route })),
       );
     });
   }
+
   putProjectAssemblyInSlide(entity) {
-    super.PUT(entity, ({ slide, project, tables, client, terminal, key }) => {
-      project.append(...tables, client, terminal);
-      this.#entity[key] = project;
-      slide.append(project);
-    });
+    super.PUT(
+      entity,
+      ({ slide, project, canvas, client, options, terminal, key }) => {
+        client.rest.append(...options);
+        project.append(...canvas, client, terminal);
+        this.#entity[key] = project;
+        slide.append(project);
+      },
+    );
   }
   deleteCardFromProjectDisplay(slide) {
     super.DELETE(slide, (s) => {

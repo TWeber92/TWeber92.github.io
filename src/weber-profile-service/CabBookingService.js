@@ -11,10 +11,10 @@ export class CabBookingService extends ProjectService {
 
   async putCabBookingProjectInSlide(button, slides) {
     const rest = Object.keys(CabBookingRoutes);
-    const schema = [
-      await this.#repo.getCabBookingCabsTableSchema(),
-      await this.#repo.getCabBookingBookingsTableSchema(),
-    ];
-    super.putProjectInSlide(button, slides, rest, schema);
+    const schemas = await this.#repo.getCabBookingTableSchema();
+    console.log(schemas);
+    
+    const tables = super.putTableTogether(schemas);
+    super.putProjectInSlide(button, slides, rest, tables);
   }
 }

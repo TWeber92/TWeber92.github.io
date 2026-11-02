@@ -12,8 +12,9 @@ export class SpringSecurityService extends ProjectService {
   async putSpringSecurityProjectInSlide(button, slides) {
     const key = button.name;
     const rest = Object.keys(SpringSecurityRoutes);
-    const schema = [await this.#repo.getSecurityTableSchema()];
-    super.putProjectInSlide(button, slides, rest, schema);
+    const schema = await this.#repo.getSecurityTableSchema();
+    const table = super.putTableTogether(schema);
+    super.putProjectInSlide(button, slides, rest, table);
     this.#repo.putAuthGroupInClientDisplay(key);
   }
 }

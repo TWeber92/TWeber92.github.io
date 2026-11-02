@@ -65,12 +65,12 @@ export class CarouselView {
           </div>
         </div>`;
     this.#buttons = `
-        <button id="project" name="security">Spring REST Security</button>
-        <button id="project" name="novels">Spring Novels</button>
-        <button id="project" name="booking">Spring Cab Booking</button>
-        <button id="project" name="maven">Maven Library</button>
-        <button id="project" name="coinApi">Coin API</button>
-        <button id="project" name="sitewise">AWS SiteWise</button>
+        <button id="project" name="spring-security">Spring REST Security</button>
+        <button id="project" name="authors-novels">Spring Novels</button>
+        <button id="project" name="cab-booking">Spring Cab Booking</button>
+        <button id="project" name="maven-library">Maven Library</button>
+        <button id="project" name="coin-api">Coin API</button>
+        <button id="project" name="iot-sitewise">AWS SiteWise</button>
         <a href="/coin-collection-frontend/" target="_blank" rel="noopener noreferrer">Quarter Map Demo</a>`;
   }
 

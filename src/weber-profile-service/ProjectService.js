@@ -7,33 +7,31 @@ export class ProjectService {
   }
   #repo;
 
-  getEntityProfile(slide, rest, schemas, key) {
-    const { project, terminal, table, client } = ProjectView.from({
-      ...Object.fromEntries(rest.map((k) => [k, k])),
+  getEntityProfile(slide, rest, canvas, key) {
+    const { project, terminal, client, option } = ProjectView.from({
       key,
     });
     const nodes = this.#repo.getProjectPartsWithHtml(
-      project + terminal + table + client,
+      project + terminal + client + option,
     );
-    const tables = schemas.map((schema, i) => {
-      const tableNode = i === 0 ? nodes.table : nodes.table.cloneNode(true); // deep clone so thead/tbody come along
-      this.#repo.putTableTogether({ table: tableNode, schema });
-      return tableNode;
-    });
+    const options = rest.map((k) =>
+      this.#repo.getOption({ opt: nodes.option, val: k }),
+    );
     return {
       slide,
-      tables,
+      options,
+      canvas,
       terminal: nodes.terminal,
       project: nodes.project,
       client: nodes[key],
     };
   }
-  putProjectInSlide(button, slides, rest, schema) {
+  putProjectInSlide(button, slides, rest, canvas) {
     const key = button.name;
     const slide = slides[button.dataset.pos];
     this.#repo.deleteCardFromProjectDisplay(slide);
     if (this.#repo.entity?.[key]) return;
-    const profile = this.getEntityProfile(slide, rest, schema, key);
+    const profile = this.getEntityProfile(slide, rest, canvas, key);
     const entity = Project.from(profile);
     this.#repo.putProjectAssemblyInSlide({ ...entity.to(), key });
   }
@@ -46,5 +44,15 @@ export class ProjectService {
       key: formId,
       opt: node.option,
     });
+  }
+  putTableTogether(schemas) {
+    const { table } = ProjectView.from({});
+    const node = this.#repo.getProjectPartsWithHtml(table);
+    return schemas.map((schema, i) =>
+      this.#repo.putTableTogether({ table: node.table, schema, i }),
+    );
+  }
+  getProjectPartsWithHtml(html) {//no sense in all the children having the same repo method
+    this.#repo.getProjectPartsWithHtml(html)
   }
 }

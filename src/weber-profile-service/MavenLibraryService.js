@@ -11,10 +11,8 @@ export class MavenLibraryService extends ProjectService {
 
   async putMavenLibraryProjectInSlide(button, slides) {
     const rest = Object.keys(MavenLibraryRoutes);
-    const schema = [
-      await this.#repo.getMavenMembersTableSchema(),
-      await this.#repo.getMavenBooksTableSchema(),
-    ];
-    super.putProjectInSlide(button, slides, rest, schema);
+    const schemas = await this.#repo.getMavenLibraryTableSchema();
+    const tables = super.putTableTogether(schemas)
+    super.putProjectInSlide(button, slides, rest, tables);
   }
 }

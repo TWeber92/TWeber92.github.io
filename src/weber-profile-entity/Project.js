@@ -2,15 +2,17 @@ export class Project {
   #slide;
   #terminal;
   #project;
-  #tables;
+  #canvas;
   #client;
+  #options;
 
   constructor(data) {
     this.#slide = data.slide;
     this.#terminal = data.terminal;
     this.#project = data.project;
-    this.#tables = data.tables;
+    this.#canvas = data.canvas;
     this.#client = data.client;
+    this.#options = data.options;
   }
 
   to() {
@@ -18,8 +20,9 @@ export class Project {
       slide: this.#slide,
       terminal: this.#terminal,
       project: this.#project,
-      tables: this.#tables,
+      canvas: this.#canvas,
       client: this.#client,
+      options: this.#options,
     };
   }
 
