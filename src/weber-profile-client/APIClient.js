@@ -1,3 +1,6 @@
+import { APIError } from "../weber-profile-exception/WeberProfileError.js";
+import { Logger } from "../weber-profile-utility/Logger.js";
+
 export class APIClient {
   constructor(baseURL) {
     this.baseURL = baseURL;
@@ -12,44 +15,65 @@ export class APIClient {
         credentials: "include",
         body,
       });
-
       const contentType = response.headers.get("content-type");
       let data = null;
-
-      if (contentType?.includes("application/json")) {
+      if (contentType?.includes("application/json"))
         data = await response.json();
-      } else {
-        data = await response.text();
+      else data = await response.text();
+      // Graceful DB Error (e.g., 400, 401, 404)
+      if (!response.ok && response.status < 500) {
+        Logger.emit("warn", {
+          message: `HTTP ${response.status}`,
+          meta: { data },
+        });
+        return {
+          message: data?.message || "Request failed",
+          status: response.status,
+          data,
+        };
       }
-
-      if (!response.ok) {
-        throw { status: response.status, data };
+      if (response.status >= 500) {
+        throw new APIError(
+          data?.message || "Internal Server Error",
+          "ServerError",
+          `${method} ${endpoint}`,
+          response.status,
+        );
       }
-
       return data;
     } catch (error) {
-      console.error("APIClient error:", error);
-      throw error;
+      // Network Failure / Catch Block
+      if (error instanceof APIError) throw error; // Re-throw if we just made it
+      Logger.emit("error", {
+        message: `Network failure on ${method} ${url}`,
+        meta: { error: error.message },
+      });
+      throw new APIError(
+        error.message || "Network Error",
+        "NetworkError",
+        `${method} ${endpoint}`,
+        500,
+      );
     }
   }
 
-  GET(endpoint, dto = null, headers = {}) {
+  GET(endpoint, method = "GET", headers = {}, dto = null) {
     const options = { headers };
     if (dto) options.body = JSON.stringify(dto);
-    return this.API(endpoint, "GET", options);
+    return this.API(endpoint, method, options);
   }
 
-  POST(endpoint, dto, headers = {}) {
-    return this.API(endpoint, "POST", { body: JSON.stringify(dto), headers });
+  POST(endpoint, method = "POST", dto, headers = {}) {
+    return this.API(endpoint, method, { body: JSON.stringify(dto), headers });
   }
 
-  PUT(endpoint, dto, headers = {}) {
-    return this.API(endpoint, "PUT", { body: JSON.stringify(dto), headers });
+  PUT(endpoint, method = "PUT", dto, headers = {}) {
+    return this.API(endpoint, method, { body: JSON.stringify(dto), headers });
   }
 
-  DELETE(endpoint, dto = null, headers = {}) {
+  DELETE(endpoint, method = "DELETE", headers = {}, dto = null) {
     const options = { headers };
     if (dto) options.body = JSON.stringify(dto);
-    return this.API(endpoint, "DELETE", options);
+    return this.API(endpoint, method, options);
   }
 }

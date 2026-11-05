@@ -15,10 +15,12 @@ export class AuthorsNovelsRepository extends DocumentClient {
   get entity() {
     return this.#entity;
   }
-  async getAuthorsNovelsTableSchema() {
-    return await this.#profile.GET(
-      "/api/v1/project?projectName=authors-novels",
-    );
+  async getAllAuthors(endpoint, method) {
+    return await this.#render.API(endpoint, method);
+  }
+
+  async getAuthorsNovelsTableSchema(project) {
+    return await this.#profile.GET(`/api/v1/project?projectName=${project}`);
   }
 
   // getAuthorsNovelsAuthorsTableSchema() {

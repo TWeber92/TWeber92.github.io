@@ -1,20 +1,17 @@
-import { AppController } from "./AppController.js";
-
-export class HeaderController extends AppController {
+export class HeaderController {
   constructor(service) {
-    super()
     this.#service = service;
   }
 
   #service;
 
-  putContextInHeader(req, res){
-    super.PUT(req, res, () => this.#service.putContextInHeader())
+  putContextInHeader(req, res) {
+    this.#service.putContextInHeader(req);
+    res.obj(null);
   }
 
   putMenuNavOnOffDisplay(req, res) {
-    super.PUT(req, res, () =>
-      this.#service.putMenuNavOnOffDisplay(req.body.menuBtn),
-    );
+    this.#service.putMenuNavOnOffDisplay(req.body.menuBtn);
+    res.obj(null);
   }
 }

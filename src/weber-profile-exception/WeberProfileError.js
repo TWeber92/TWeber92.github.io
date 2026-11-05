@@ -94,3 +94,23 @@ export class APIError extends CoinCollectionError {
     super({ message, name, operation, status });
   }
 }
+export class TerminalException extends Error {
+  constructor(message, data = null, terminal, status = 500) {
+    super(message);
+    this.name = "TerminalException";
+    this.data = data;
+    this.terminal = terminal
+    this.status = status;
+  }
+
+  toTerminal() {
+    if (!this.terminal) return;
+    const output = this.terminal.children.output;
+    output.dataset.status = this.status;
+    const statusHeader = `[ HTTP ${this.status} ]`;
+    const messageLine = this.message ? `${this.message}\n\n` : "";
+    const dataLine = this.data ? JSON.stringify(this.data, null, 2) : "";
+    output.textContent = `${statusHeader}\n${messageLine}${dataLine}`;
+    this.terminal.open = true;
+  }
+}

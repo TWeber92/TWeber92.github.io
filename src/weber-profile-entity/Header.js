@@ -15,6 +15,7 @@ export class Header {
     this.#buttons = {
       about: data.buttons.about,
       contact: data.buttons.contact,
+      projects: data.buttons.projects
     };
   }
 

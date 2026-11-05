@@ -42,9 +42,9 @@ export class CarouselView {
         <div id="track" class="carousel-track"></div>
         <div id="controls" class="carousel-controls">
           <button id="prev" data-option="prev" type="button" aria-label="Previous slide">‹</button>
-          <div class="carousel-dots" id="carousel" role="tablist">
+          <div class="carousel-dots" role="tablist">
             <span id="prev" class="dot" data-option="prev" role="tab" aria-label="Slide 1"></span>
-            <span id="active" class="dot" data-option="active" role="tab" aria-label="Slide 2"></span>
+            <span class="dot" data-option="active" role="tab" aria-label="Slide 2"></span>
             <span id="next" class="dot" data-option="next" role="tab" aria-label="Slide 3"></span>
           </div>
           <button id="next" data-option="next" type="button" aria-label="Next slide">›</button>

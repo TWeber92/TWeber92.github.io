@@ -27,12 +27,14 @@ import { IoTSiteWiseService } from "./weber-profile-service/IoTSiteWiseService.j
 import { MavenLibraryService } from "./weber-profile-service/MavenLibraryService.js";
 import { ProjectService } from "./weber-profile-service/ProjectService.js";
 import { SpringSecurityService } from "./weber-profile-service/SpringSecurityService.js";
+import { Logger } from "./weber-profile-utility/Logger.js";
 
 export class Application {
   static #controllers = {};
   #clients = {};
 
   constructor() {
+    Logger.setup(); // Turn on the console loggers
     const views = Application.viewInstance.views;
     const controllers = Application.#controllers;
     this.#buildClients();

@@ -8,35 +8,42 @@ import { SpringSecurityRoutes } from "../src/weber-profile-enum/SpringSecurityRo
 
 export const handler = async (e) => {
   let responseBody;
-  const {
-    projectController,
-    springSecurityController,
-    authorsNovelsController,
-    cabBookingController,
-    mavenLibraryController,
-    coinApiController,
-    sitewiseController,
-    carouselController,
-  } = Application.controllers;
-  const formId = e.target.form?.id;
-  const value = e.target.value;
+  const { projectController, sitewiseController } = Application.controllers;
+  const form = e.target.form;
+  const { rest, endpoint, assetsIds } = form;
+  const project = form?.name;
+  const method = rest.value || null;
+  const id = e.target.id;
   const endpoints = {
-    "spring-security": SpringSecurityRoutes[value],
-    "authors-novels": AuthorsNovelsRoutes[value],
-    "cab-booking": CabBookingRoutes[value],
-    "maven-library": MavenLibraryRoutes[value],
-    "iot-sitewise": IoTSiteWiseOptions[value],
-    "coin-api": CoinApiRoutes[value],
+    "spring-security": SpringSecurityRoutes[method],
+    "authors-novels": AuthorsNovelsRoutes[method],
+    "cab-booking": CabBookingRoutes[method],
+    "maven-library": MavenLibraryRoutes[method],
+    "iot-sitewise": IoTSiteWiseOptions[method],
+    "coin-api": CoinApiRoutes[method],
   };
-  const routes = formId ? endpoints[formId] : undefined;
-  const req = { body: { formId, routes } };
+  const routes = project ? endpoints[project] : undefined;
+  const req = {
+    body: {
+      project,
+      routes,
+      method,
+      endpoint: endpoint.value,
+      id: assetsIds?.value,
+    },
+  };
   const res = { obj: (data) => (responseBody = data) };
 
-  
-  const router = {
-    rest: async () => await projectController.putEndpointsInSelection(req, res), //args - routes, formId
-    
+  const selectRouter = {
+    body: async () => await projectController.putClientBodyOnDisplay(req, res), //args - project
+    rest: async () => await projectController.putEndpointsInSelection(req, res), //args - method, routes, project
+    endpoint: async () =>
+      project === "iot-sitewise"
+        ? await sitewiseController.putNewMachineDataById(req, res) //args - id, endpoint, method
+        : await projectController.putInputControlsInClient(req, res), //args - project, endpoint
+    assetIds: async () =>
+      await sitewiseController.putNewMachineDataById(req, res), //args - id, endpoint, method
   };
 
-  router[e.target.name]();
+  if (method) selectRouter[id]();
 };

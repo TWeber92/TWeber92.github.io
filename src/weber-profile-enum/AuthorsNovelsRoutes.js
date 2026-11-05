@@ -1,10 +1,10 @@
 export const AuthorsNovelsRoutes = Object.freeze({
   GET: Object.freeze([
-    "/api/authors",
-    "/api/authors/{id}",
-    "/api/authors/search",
+    "/novels/authors",
+    "/novels/authors/{authorName}",
+    "/novels/authors/{authorName}/{year}",
   ]),
-  POST: Object.freeze(["/api/authors"]),
-  PUT: Object.freeze(["/api/authors/{id}"]),
-  DELETE: Object.freeze(["/api/authors/{id}"]),
+  POST: Object.freeze(["/novels/authors", "/novels"]),
+  PUT: Object.freeze(["/novels/authors/{id}"]),
+  DELETE: Object.freeze(["/novels/authors/{authorId}", "/novels/{novelId}"]),
 });

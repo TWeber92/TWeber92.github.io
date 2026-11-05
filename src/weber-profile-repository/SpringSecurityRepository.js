@@ -16,18 +16,19 @@ export class SpringSecurityRepository extends DocumentClient {
   get entity() {
     return this.#entity;
   }
+  async getInfyBankCustomers(endpoint, method, auth) {
+    return await this.#render.API(endpoint, method, { Authorization: auth });
+  }
 
-  async getSecurityTableSchema() {
-    return await this.#profile.GET(
-      "/api/v1/project?projectName=spring-security",
-    );
+  async getSecurityTableSchema(project) {
+    return await this.#profile.GET(`/api/v1/project?projectName=${project}`);
   }
 
   putAuthGroupInClientDisplay(key) {
     super.PUT(key, (k) => {
       const security = this.#entity[k];
       const form = security.children[k];
-      const authGroup = form.firstChild.children.auth;
+      const authGroup = form.children.auth;
       authGroup.hidden = false;
     });
   }

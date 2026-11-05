@@ -21,30 +21,25 @@ export class ProjectView {
 
   set #html(data) {
     this.#project = `
-                <div id="project" hidden></div>`;
+                <div id="projectSlide" hidden></div>`;
     this.#terminal = `
                 <details id="terminal">
                   <summary>View Raw API Response</summary>
                   <pre id="output"><code>// Waiting...</code></pre>
                 </details>`;
     this.#table = `
-                <table id="table">
-                  <thead id="thead">
-                    <tr><th></th></tr>
-                  </thead>
-                  <tbody id="tbody">
-                    <tr><td></td></tr>
-                  </tbody>
-                </table>`;
+                <div id="database">
+                  <table id="table">
+                    <thead id="thead">
+                      <tr><th></th></tr>
+                    </thead>
+                    <tbody id="tbody">
+                      <tr><td></td></tr>
+                    </tbody>
+                  </table>
+                </div>`;
     this.#client = `
-                <form id="${data.key}">
-                  <div>
-                    <select name="rest">
-                    </select>
-                    <select id="endpoint" name="endpoint">
-                    </select>
-                    <input name="parameter" type="text" placeholder="{id}" hidden />
-                    <button type="button">Body</button>
+                <form id="project-form" name="${data.key}">
                     <div id="auth" hidden>
                       <label>
                         <span>Username</span>
@@ -55,12 +50,21 @@ export class ProjectView {
                         <input type="password" name="password" value="smith123" />
                       </label>
                     </div>
-                    <button type="submit">submit</button>
-                  </div>
-                  <div hidden>
-                    <textarea name="body"placeholder="Enter raw JSON here...">
-                    </textarea>
-                  </div>
+                    <div id="controls">
+                      <select id="rest" name="rest">
+                        <option value="" disabled selected hidden>METHOD</option>
+                      </select>
+                      <select id="endpoint" name="endpoint">
+                        <option value="" disabled selected hidden>Endpoint</option>
+                      </select>
+                      <input name="parameter" type="text" placeholder="{id}" hidden />
+                      <button id="body" type="button">Body</button>
+                      <button name="button" type="submit">submit</button>
+                    </div>
+                    <div id="textarea" hidden>
+                      <textarea name="body" placeholder="Enter raw JSON here...">
+                      </textarea>
+                    </div>
                 </form>`;
     this.#option = `
                 <option id="option"></option>`;

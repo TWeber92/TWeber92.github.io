@@ -1,19 +1,24 @@
-import { AppController } from "./AppController.js";
-
-export class AuthorsNovelsController extends AppController {
+export class AuthorsNovelsController {
   constructor(service) {
-    super();
     this.#service = service;
   }
 
   #service;
 
-  putAuthorsNovelsProjectInSlide(req, res) {
-    super.PUT(req, res, () =>
-      this.#service.putAuthorsNovelsProjectInSlide(
-        req.body.button,
-        req.body.carousel.slides,
-      ),
+  async getAllAuthors(req, res) {
+    const result = await this.#service.getAllAuthors(
+      req.body.project,
+      req.body.method,
+      req.body.endpoint,
     );
+    res.obj(result || null);
+  }
+
+  putAuthorsNovelsProjectInSlide(req, res) {
+    this.#service.putAuthorsNovelsProjectInSlide(
+      req.body.button,
+      req.body.carousel.slides,
+    );
+    res.obj(null);
   }
 }

@@ -1,19 +1,25 @@
-import { AppController } from "./AppController.js";
-
-export class SpringSecurityController extends AppController {
+export class SpringSecurityController {
   constructor(service) {
-    super();
     this.#service = service;
   }
 
   #service;
 
-  putSpringSecurityProjectInSlide(req, res) {
-    super.PUT(req, res, () =>
-      this.#service.putSpringSecurityProjectInSlide(
-        req.body.button,
-        req.body.carousel.slides,
-      ),
+  getInfyBankCustomers(req, res) {
+    const result = this.#service.getInfyBankCustomers(
+      req.body.authHeader,
+      req.body.project,
+      req.body.method,
+      req.body.endpoint,
     );
+    res.obj(result || null);
+  }
+
+  putSpringSecurityProjectInSlide(req, res) {
+    this.#service.putSpringSecurityProjectInSlide(
+      req.body.button,
+      req.body.carousel.slides,
+    );
+    res.obj(null);
   }
 }

@@ -1,4 +1,6 @@
 @import "./header.css";
+@import "./carousel.css";
+@import "./project.css";
 
 body {
   height: 100%;
@@ -12,10 +14,44 @@ body[data-overlay="true"]::before {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  pointer-events: none;
   z-index: 4;
 }
 
-#active {
+#projects,
+#project,
+#prev,
+#next,
+#active,
+#hamburger,
+#about,
+#contact,
+#rest,
+#enpoints,
+#assetIds,
+#close {
   pointer-events: auto;
 }
+
+body[data-overlay="true"] #project,
+body[data-overlay="true"] #projects,
+body[data-overlay="true"] #prev,
+body[data-overlay="true"] #next,
+body[data-overlay="true"] #active,
+body[data-overlay="true"] #hamburger,
+body[data-overlay="true"] #about,
+body[data-overlay="true"] #contact,
+body[data-overlay="true"] #close {
+  pointer-events: none;
+}
+
+div#prev,
+div#next {
+  pointer-events: none;
+}
+
+body[data-overlay="true"]:has(#overlay:not([hidden])) :where(#close, #project),
+body[data-overlay="true"]:has(#navMenu:not([hidden]))
+  :where(#hamburger, #about, #contact, #projects) {
+  pointer-events: auto;
+}
+

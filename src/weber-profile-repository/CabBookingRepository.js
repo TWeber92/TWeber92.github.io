@@ -16,8 +16,12 @@ export class CabBookingRepository extends DocumentClient {
     return this.#entity;
   }
 
-  async getCabBookingTableSchema() {
-    return await this.#profile.GET("/api/v1/project?projectName=cab-booking");
+  async getCabBookings(endpoint, method) {
+    return await this.#render.GET(endpoint, method);
+  }
+
+  async getCabBookingTableSchema(project) {
+    return await this.#profile.GET(`/api/v1/project?projectName=${project}`);
   }
 
   // getCabBookingCabsTableSchema() {

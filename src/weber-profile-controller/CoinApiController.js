@@ -1,8 +1,5 @@
-import { AppController } from "./AppController.js";
-
-export class CoinApiController extends AppController {
+export class CoinApiController {
   constructor(service) {
-    super();
     this.#service = service;
   }
 

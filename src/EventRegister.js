@@ -8,7 +8,8 @@ export class EventRegister {
     this.#registerClickListener();
     this.#registerInputListener();
     this.#registerSubmitListener();
-    this.#registerPointerListeners();
+    this.#registerChangeListener();
+    // this.#registerPointerListeners();
     this.#registerLoadedListener();
   }
 
@@ -37,6 +38,11 @@ export class EventRegister {
     });
     document.addEventListener("mouseout", async (e) => {
       if (e.target.nodeType !== 1) return;
+      await event(e);
+    });
+  }
+  async #registerChangeListener() {
+    document.addEventListener("change", async (e) => {
       await event(e);
     });
   }

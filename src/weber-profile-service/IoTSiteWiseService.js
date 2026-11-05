@@ -22,6 +22,7 @@ export class IoTSiteWiseService extends ProjectService {
     super.putEndpointsInSelection(Object.keys(assetIds), key);//3rd dropdown
     const selection = this.#repo.getSelectionClone(key);
     selection.name = "assetIds";
+    selection.id = "assetIds";
     super.putEndpointsInSelection(IoTSiteWiseOptions["Extrusion Line 1"], key);//second dropdown
     this.#repo.putIdSelectionAfterOptions({ ids: selection, key });//3rd dropown appended after options
     await putSvgCanvasTogether(assetIds["Extrusion Line 1"]);

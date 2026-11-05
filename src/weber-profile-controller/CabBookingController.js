@@ -1,19 +1,25 @@
-import { AppController } from "./AppController.js";
-
-export class CabBookingController extends AppController {
+export class CabBookingController {
   constructor(service) {
-    super();
     this.#service = service;
   }
 
   #service;
 
-  putCabBookingProjectInSlide(req, res) {
-    super.PUT(req, res, () =>
-      this.#service.putCabBookingProjectInSlide(
-        req.body.button,
-        req.body.carousel.slides,
-      ),
+  async getCabBookings(req, res) {
+    const result = this.#service.getCabBookings(
+      req.body.project,
+      req.body.method,
+      req.body.endpoint,
+      req.body.parameter,
     );
+    res.obj(result || null)
+  }
+
+  putCabBookingProjectInSlide(req, res) {
+    this.#service.putCabBookingProjectInSlide(
+      req.body.button,
+      req.body.carousel.slides,
+    );
+    res.obj(null);
   }
 }

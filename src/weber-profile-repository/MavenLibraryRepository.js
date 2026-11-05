@@ -16,8 +16,12 @@ export class MavenLibraryRepository extends DocumentClient {
     return this.#entity;
   }
 
-  async getMavenLibraryTableSchema() {
-    return await this.#profile.GET("/api/v1/project?projectName=maven-library");
+  async getLibraryBooks(endpoint, method) {
+    return await this.#render.GET(endpoint, method);
+  }
+
+  async getMavenLibraryTableSchema(project) {
+    return await this.#profile.GET(`/api/v1/project?projectName=${project}`);
   }
 
   // getMavenMembersTableSchema() {

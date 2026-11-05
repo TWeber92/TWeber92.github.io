@@ -36,6 +36,9 @@ export class HeaderView {
         </button>
         <button id="contact"data-nav-item class="nav-item">
           🔎Contact
+        </button>
+        <button id="projects" data-nav-item class="nav-item">
+          🈸Projects
         </button>`;
   }
 

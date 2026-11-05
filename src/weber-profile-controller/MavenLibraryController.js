@@ -1,19 +1,25 @@
-import { AppController } from "./AppController.js";
-
-export class MavenLibraryController extends AppController {
+export class MavenLibraryController {
   constructor(service) {
-    super();
     this.#service = service;
   }
 
   #service;
 
-  putMavenLibraryProjectInSlide(req, res) {
-    super.PUT(req, res, () =>
-      this.#service.putMavenLibraryProjectInSlide(
-        req.body.button,
-        req.body.carousel.slides,
-      ),
+  async getLibraryBooks(req, res) {
+    const { project, method, endpoint } = req.body;
+    const result = await this.#service.getLibraryBooks(
+      project,
+      method,
+      endpoint,
     );
+    res.obj(result || null);
+  }
+
+  putMavenLibraryProjectInSlide(req, res) {
+    this.#service.putMavenLibraryProjectInSlide(
+      req.body.button,
+      req.body.carousel.slides,
+    );
+    res.obj(null);
   }
 }

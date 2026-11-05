@@ -1,4 +1,5 @@
 import { Project } from "../weber-profile-entity/Project.js";
+import { TerminalException } from "../weber-profile-exception/WeberProfileError.js";
 import { ProjectView } from "../weber-profile-view/ProjectView.js";
 
 export class ProjectService {
@@ -6,6 +7,11 @@ export class ProjectService {
     this.#repo = repo;
   }
   #repo;
+
+  getProjectPartsWithHtml(html) {
+    //no sense in all the children having the same repo method
+    this.#repo.getProjectPartsWithHtml(html);
+  }
 
   getEntityProfile(slide, rest, canvas, key) {
     const { project, terminal, client, option } = ProjectView.from({
@@ -22,7 +28,7 @@ export class ProjectService {
       options,
       canvas,
       terminal: nodes.terminal,
-      project: nodes.project,
+      project: nodes.projectSlide,
       client: nodes[key],
     };
   }
@@ -36,23 +42,54 @@ export class ProjectService {
     this.#repo.putProjectAssemblyInSlide({ ...entity.to(), key });
   }
 
-  putEndpointsInSelection(routes, formId) {
+  putEndpointsInSelection(method, routes, project) {
     const { option } = ProjectView.from({});
     const node = this.#repo.getProjectPartsWithHtml(option);
     this.#repo.putEndpointsInSelection({
       routes,
-      key: formId,
+      method,
+      key: project,
       opt: node.option,
     });
   }
-  putTableTogether(schemas) {
+  putTableTogether(schemas, db = null) {
     const { table } = ProjectView.from({});
-    const node = this.#repo.getProjectPartsWithHtml(table);
-    return schemas.map((schema, i) =>
-      this.#repo.putTableTogether({ table: node.table, schema, i }),
+    db = db || this.#repo.getProjectPartsWithHtml(table).database;
+    db.replaceChildren(
+      ...schemas.map((schema, i) =>
+        this.#repo.putTableTogether({ table: db, schema, i }),
+      ),
     );
+    return db;
   }
-  getProjectPartsWithHtml(html) {//no sense in all the children having the same repo method
-    this.#repo.getProjectPartsWithHtml(html)
+
+  putInputControlsInClient(project, endpoint) {
+    const hidden = this.#repo.getProjectClient(project).hidden;
+    if (hidden && /\{.*?\}/.test(endpoint))
+      this.#repo.putParmeterInputOnDisplay(project);
+    if (!hidden) this.#repo.deleteParameterInputFromDisplay(project);
+  }
+  async handleGetRequest({ project, formatSchema, result }) {
+    const { terminal, database } = this.#repo.getProjectFromEntity(project);
+    if (result.message)
+      return new TerminalException(
+        result.message,
+        result.data,
+        terminal,
+        result.status,
+      );
+    const schema = formatSchema(result);
+    this.putTableTogether(schema, database);
+    this.#repo.putDataInTerminal({
+      terminal,
+      status: 200,
+      data: result,
+      message: "Success",
+    });
+  }
+  putClientBodyOnDisplay(id) {
+    const project = this.#repo.getProjectFromEntity(id);
+    const form = project[id];
+    this.#repo.putClientBodyOnDisplay(form);
   }
 }

@@ -9,10 +9,33 @@ export class MavenLibraryService extends ProjectService {
 
   #repo;
 
+  async getLibraryBooks(project, method, endpoint) {
+    const result = await this.#repo.getLibraryBooks(endpoint, method);
+    console.log("Is Array?", Array.isArray(result));
+    console.log("Typeof:", typeof result);
+    console.log("Raw:", result);
+
+    return await super.handleGetRequest({
+      result,
+      project,
+      formatSchema: (result) => [
+        {
+          columns: ["ID", "Title", "Author", "ISBN"],
+          rows: result.map((book) => ({
+            title: book.title,
+            author: book.author,
+            isbn: book.isbn,
+            memberId: book.memberId,
+          })),
+        },
+      ],
+    });
+  }
+
   async putMavenLibraryProjectInSlide(button, slides) {
     const rest = Object.keys(MavenLibraryRoutes);
-    const schemas = await this.#repo.getMavenLibraryTableSchema();
-    const tables = super.putTableTogether(schemas)
+    const schemas = await this.#repo.getMavenLibraryTableSchema(button.name);
+    const tables = super.putTableTogether(schemas);
     super.putProjectInSlide(button, slides, rest, tables);
   }
 }
