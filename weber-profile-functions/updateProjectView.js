@@ -12,8 +12,11 @@ export const handler = async (e) => {
   const form = e.target.form;
   const { rest, endpoint, assetsIds } = form;
   const project = form?.name;
+  console.log(project);
+  
   const method = rest.value || null;
   const id = e.target.id;
+  console.log(id);
   const endpoints = {
     "spring-security": SpringSecurityRoutes[method],
     "authors-novels": AuthorsNovelsRoutes[method],
@@ -35,7 +38,7 @@ export const handler = async (e) => {
   const res = { obj: (data) => (responseBody = data) };
 
   const selectRouter = {
-    body: async () => await projectController.putClientBodyOnDisplay(req, res), //args - project
+    body: async () => await projectController.putClientBodyOnOffDisplay(req, res), //args - project
     rest: async () => await projectController.putEndpointsInSelection(req, res), //args - method, routes, project
     endpoint: async () =>
       project === "iot-sitewise"
@@ -45,5 +48,5 @@ export const handler = async (e) => {
       await sitewiseController.putNewMachineDataById(req, res), //args - id, endpoint, method
   };
 
-  if (method) selectRouter[id]();
+  if (method) selectRouter[id](); //order of operations, set method first
 };

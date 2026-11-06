@@ -24,21 +24,29 @@ export class ProjectService {
       this.#repo.getOption({ opt: nodes.option, val: k }),
     );
     return {
-      slide,
+      // slide,
       options,
+      // canvas,
+      nodes,
+      // terminal: nodes.terminal,
+      // project: nodes.projectSlide,
+      // client: nodes[key],
+    };
+  }
+  putProjectInSlide(button, slide, rest, canvas) {
+    const key = button.name;
+    this.#repo.deleteCardFromProjectDisplay(slide);
+    const { options, nodes } = this.getEntityProfile(slide, rest, canvas, key);
+    console.log(...nodes);
+    
+    const entity = Project.from({
+      options,
+      slide,
       canvas,
       terminal: nodes.terminal,
       project: nodes.projectSlide,
       client: nodes[key],
-    };
-  }
-  putProjectInSlide(button, slides, rest, canvas) {
-    const key = button.name;
-    const slide = slides[button.dataset.pos];
-    this.#repo.deleteCardFromProjectDisplay(slide);
-    if (this.#repo.entity?.[key]) return;
-    const profile = this.getEntityProfile(slide, rest, canvas, key);
-    const entity = Project.from(profile);
+    });
     this.#repo.putProjectAssemblyInSlide({ ...entity.to(), key });
   }
 
@@ -46,10 +54,10 @@ export class ProjectService {
     const { option } = ProjectView.from({});
     const node = this.#repo.getProjectPartsWithHtml(option);
     this.#repo.putEndpointsInSelection({
-      routes,
       method,
       key: project,
       opt: node.option,
+      routes: Object.keys(routes),//this would not be the routes with arrrow function val
     });
   }
   putTableTogether(schemas, db = null) {
@@ -87,9 +95,18 @@ export class ProjectService {
       message: "Success",
     });
   }
-  putClientBodyOnDisplay(id) {
+  putClientBodyOnOffDisplay(id) {
+    console.log(id);
+    
     const project = this.#repo.getProjectFromEntity(id);
     const form = project[id];
-    this.#repo.putClientBodyOnDisplay(form);
+    this.#repo.putClientBodyOnOffDisplay(form);
+  }
+  putSelectedProjectInSlide(slide, project) {
+    this.#repo.deleteCardFromProjectDisplay(slide);
+    this.#repo.putSelectedProjectInSlide({
+      s: slide,
+      p: project,
+    });
   }
 }

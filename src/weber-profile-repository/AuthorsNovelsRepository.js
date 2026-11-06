@@ -16,6 +16,8 @@ export class AuthorsNovelsRepository extends DocumentClient {
     return this.#entity;
   }
   async getAllAuthors(endpoint, method) {
+    console.log("reached the repo");
+    
     return await this.#render.API(endpoint, method);
   }
 

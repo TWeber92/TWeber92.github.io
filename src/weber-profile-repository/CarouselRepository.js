@@ -37,6 +37,11 @@ export class CarouselRepository extends DocumentClient {
   }
 
   putSlideTogether(assembly) {
-    super.PUT(assembly, ({ cs, btn }) => cs.replaceChildren(btn));
+    super.PUT(assembly, ({ cs, btn }) => {
+      const project = cs.nextSibling;
+      if (project) project.hidden = true;
+      cs.hidden = false;
+      cs.replaceChildren(btn);
+    });
   }
 }

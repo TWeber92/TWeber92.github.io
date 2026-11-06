@@ -36,9 +36,16 @@ export class AuthorsNovelsService extends ProjectService {
   }
 
   async putAuthorsNovelsProjectInSlide(button, slides) {
+    const key = button.name;
+    const slide = slides[button.dataset.pos];
+    const projectCache = this.#repo.entity?.[key];
+    console.log(projectCache);
+    
+    if (projectCache)
+      return super.putSelectedProjectInSlide(slide, projectCache);
     const rest = Object.keys(AuthorsNovelsRoutes);
     const schemas = await this.#repo.getAuthorsNovelsTableSchema(button.name);
     const tables = super.putTableTogether(schemas);
-    super.putProjectInSlide(button, slides, rest, tables);
+    super.putProjectInSlide(button, slide, rest, tables);
   }
 }

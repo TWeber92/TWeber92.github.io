@@ -63,7 +63,7 @@ export class CarouselService {
       const btn = toView[i];
       const slide = entity.slides[key];
       btn.dataset.pos = slide.id;
-      const container = this.#repo.getSlideContainer(slide);
+      const container = this.#repo.getSlideContainer(slide);      
       this.#repo.putSlideTogether({ cs: container, btn });
     });
   }

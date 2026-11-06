@@ -33,9 +33,14 @@ export class MavenLibraryService extends ProjectService {
   }
 
   async putMavenLibraryProjectInSlide(button, slides) {
+    const key = button.name;
+    const slide = slides[button.dataset.pos];
+    const projectCache = this.#repo.entity?.[key];
+    if (projectCache)
+      return super.putSelectedProjectInSlide(slide, projectCache);
     const rest = Object.keys(MavenLibraryRoutes);
     const schemas = await this.#repo.getMavenLibraryTableSchema(button.name);
     const tables = super.putTableTogether(schemas);
-    super.putProjectInSlide(button, slides, rest, tables);
+    super.putProjectInSlide(button, slide, rest, tables);
   }
 }

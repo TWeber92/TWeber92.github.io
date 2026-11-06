@@ -72,6 +72,15 @@ export class ProjectRepository extends DocumentClient {
     });
   }
 
+  putSelectedProjectInSlide(entity) {
+    super.PUT(entity, ({ s, p }) => {
+      console.log(s);
+      
+      p.hidden = false;
+      s.replaceChild(p, s.lastChild);
+    });
+  }
+
   putProjectAssemblyInSlide(entity) {
     super.PUT(
       entity,
@@ -80,7 +89,7 @@ export class ProjectRepository extends DocumentClient {
         client.rest.append(...options);
         project.append(canvas, client, terminal);
         this.#entity[key] = project;
-        slide.append(project);
+        slide.replaceChildren(slide.firstChild, project);
       },
     );
   }
@@ -101,8 +110,8 @@ export class ProjectRepository extends DocumentClient {
       terminal.open = true;
     });
   }
-  putClientBodyOnDisplay(form) {
-    super.PUT(form, (f) => (f.children.textarea.hidden = false));
+  putClientBodyOnOffDisplay(form) {
+    super.PUT(form.children.textarea, (ta) => (ta.hidden = !ta.hidden));
   }
   deleteParameterInputFromDisplay(formId) {
     super.PUT(

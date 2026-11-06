@@ -17,8 +17,8 @@ export class ProjectController {
     this.#service.putInputControlsInClient(req.body.project, req.body.endpoint);
     res.obj(null);
   }
-  putClientBodyOnDisplay(req, res) {
-    this.#service.putClientBodyOnDisplay(req.body.project);
+  putClientBodyOnOffDisplay(req, res) {
+    this.#service.putClientBodyOnOffDisplay(req.body.project);
     res.obj(null);
   }
 }

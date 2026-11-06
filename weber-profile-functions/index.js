@@ -4,11 +4,6 @@ import { handler as postProjectView } from "./postProjectView.js";
 import { handler as updateCarouselView } from "./updateCarouselView.js";
 import { handler as updateProjectView } from "./updateProjectView.js";
 import { handler as postProjectForm } from "./postProjectForm.js";
-export { handler as updateSpringSecView } from "./updateSpringSecView.js";
-export { handler as updateAuthorsNovView } from "./updateAuthorsNovView.js";
-export { handler as updateCabBookingView } from "./updateCabBookingView.js";
-export { handler as updateMavenLibView } from "./updateMavenLibView.js";
-export { handler as updateCoinApiView } from "./updateCoinApiView.js";
 import { Logger } from "../src/weber-profile-utility/Logger.js";
 export const event = async (e) => {
   document.body.style.cursor = "wait !important";

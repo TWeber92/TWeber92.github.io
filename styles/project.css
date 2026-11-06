@@ -8,6 +8,9 @@
   border-radius: 8px;
   overflow: hidden;
 }
+#projectSlide[hidden]{
+  display: none;
+}
 
 #database {
   flex: 1;
@@ -131,8 +134,7 @@ form #controls input[name="parameter"] {
   background: #22c55e;
   color: #000;
   border-color: #22c55e;
-  font-weight: bold;
-  min-width: 50px;
+  width: fit-content;
 }
 
 #projectSlide form button[type="submit"]:hover {
@@ -214,4 +216,10 @@ form #controls button {
 
 #terminal pre code[data-status^="5"] {
   color: #ef4444;
+}
+
+@media (min-resolution: 1.01dppx) and (max-width: 1024px) {
+  #projectSlide {
+    height: 60vh;
+  }
 }
