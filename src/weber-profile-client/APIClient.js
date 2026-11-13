@@ -1,3 +1,4 @@
+import { STATUS_TEXT } from "../weber-profile-enum/StatusTextDictionary.js";
 import { APIError } from "../weber-profile-exception/WeberProfileError.js";
 import { Logger } from "../weber-profile-utility/Logger.js";
 
@@ -20,40 +21,47 @@ export class APIClient {
       if (contentType?.includes("application/json"))
         data = await response.json();
       else data = await response.text();
-      // Graceful DB Error (e.g., 400, 401, 404)
+      const statusText = STATUS_TEXT[response.status];
       if (!response.ok && response.status < 500) {
-        Logger.emit("warn", {
+        Logger.emit("info", {
           message: `HTTP ${response.status}`,
-          meta: { data },
+          meta: { data, info: statusText },
         });
         return {
-          message: data?.message || "Request failed",
+          info: statusText || "Request failed",
           status: response.status,
           data,
         };
       }
       if (response.status >= 500) {
-        throw new APIError(
-          data?.message || "Internal Server Error",
-          "ServerError",
-          `${method} ${endpoint}`,
-          response.status,
-        );
+        Logger.emit("error", {
+          message: `Internal Server Error ${method} ${url}`,
+          meta: { error: statusText },
+        });
+        return {
+          error: statusText || "Internal Server Error",
+          status: response.status,
+          data,
+          server: new APIError(
+            statusText || "Internal Server Error",
+            "ServerError",
+            `${method} ${endpoint}`,
+            response.status,
+          ),
+        };
       }
       return data;
     } catch (error) {
-      // Network Failure / Catch Block
-      if (error instanceof APIError) throw error; // Re-throw if we just made it
       Logger.emit("error", {
         message: `Network failure on ${method} ${url}`,
-        meta: { error: error.message },
+        meta: { error: error.message || STATUS_TEXT[502] },
       });
-      throw new APIError(
-        error.message || "Network Error",
+      new APIError(
+        error.message || STATUS_TEXT[502] || "Network Error",
         "NetworkError",
         `${method} ${endpoint}`,
         500,
-      );
+      ).toToast();
     }
   }
 
@@ -63,11 +71,11 @@ export class APIClient {
     return this.API(endpoint, method, options);
   }
 
-  POST(endpoint, method = "POST", dto, headers = {}) {
+  POST(endpoint, method = "POST", headers = {}, dto) {
     return this.API(endpoint, method, { body: JSON.stringify(dto), headers });
   }
 
-  PUT(endpoint, method = "PUT", dto, headers = {}) {
+  PUT(endpoint, method = "PUT", headers = {}, dto) {
     return this.API(endpoint, method, { body: JSON.stringify(dto), headers });
   }
 

@@ -11,7 +11,7 @@ export const SpringSecurityRoutes = Object.freeze({
   }),
   PUT: Object.freeze({
     "/infybank/customer/{id}": async (req, res, controller) =>
-      await controller.putDataToCustomerById(req, res), //args - project, method, endpoint, parameter
+      await controller.putNewEmailInCustomerById(req, res), //args - project, method, endpoint, parameter
   }),
   DELETE: Object.freeze({
     "/infybank/customer/{id}": async (req, res, controller) =>

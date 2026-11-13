@@ -15,54 +15,48 @@ export class AuthorsNovelsRepository extends DocumentClient {
   get entity() {
     return this.#entity;
   }
-  async getAllAuthors(endpoint, method) {
-    console.log("reached the repo");
-    
-    return await this.#render.API(endpoint, method);
-  }
 
   async getAuthorsNovelsTableSchema(project) {
     return await this.#profile.GET(`/api/v1/project?projectName=${project}`);
   }
+  async getAllAuthors(endpoint, method) {
+    console.log(method, endpoint);
+    return await this.#render.GET(endpoint, method);
+  }
+  async getNovelsByAuthorName(endpoint, method) {
+    return await this.#render.GET(endpoint, method);
+  }
+  async getNovelsByAuthorAndYear(endpoint, method) {
+    return await this.#render.GET(endpoint, method);
+  }
+  async postAuthorToNovels(endpoint, method, payload) {
+    return await this.#render.POST(endpoint, method, {}, payload);
+  }
+  async postNovelToCollection(endpoint, method, payload) {
+    return await this.#render.POST(endpoint, method, {}, payload);
+  }
+  async putNewAuthorNameById(endpoint, method) {
+    return await this.#render.PUT(endpoint, method);
+  }
+  async putNovelData(endpoint, method, payload) {
+    return await this.#render.PUT(endpoint, method, {}, payload);
+  }
+  async deleteAuthor(endpoint, method) {
+    return await this.#render.DELETE(endpoint, method);
+  }
+  async deleteNovel(endpoint, method) {
+    return await this.#render.DELETE(endpoint, method);
+  }
 
-  // getAuthorsNovelsAuthorsTableSchema() {
-  //   return {
-  //     columns: ["ID", "Name"],
-  //     rows: [
-  //       { id: 1001, name: "Charles" },
-  //       { id: 1002, name: "Some John" },
-  //       { id: 1003, name: "Jane Doe" },
-  //       { id: 1033, name: "Doyle the third" },
-  //       { id: 1234, name: "hamilton jay 9999999" },
-  //       { id: 3456, name: "New Auth uuu dar" },
-  //       { id: 6666, name: "shgdhg" },
-  //       { id: 9897, name: "Some name" },
-  //     ],
-  //   };
-  // }
-
-  // getAuthorsNovelsNovelsTableSchema() {
-  //   return {
-  //     columns: ["ID", "Title", "Year", "Author ID"],
-  //     rows: [
-  //       { id: 14, title: "New Novel", year: 2020, auth_id: 1001 },
-  //       { id: 15, title: "Climbing for Experts", year: 2009, auth_id: 1003 },
-  //       { id: 16, title: "39839", year: null, auth_id: null },
-  //       {
-  //         id: 19,
-  //         title: "New Novel From AddNovel Component",
-  //         year: 2999,
-  //         auth_id: 1001,
-  //       },
-  //       { id: 20, title: "New Ages Two", year: 2000, auth_id: 1003 },
-  //       { id: 23, title: "Bridgerton", year: 2021, auth_id: 1033 },
-  //       { id: 29, title: "SOme Novel", year: 2023, auth_id: 1003 },
-  //       { id: 31, title: "kwjk", year: 2021, auth_id: 1002 },
-  //       { id: 32, title: "klhfejher2kjf", year: 2021, auth_id: 1001 },
-  //       { id: 33, title: "jhekjfh", year: 2021, auth_id: 1001 },
-  //       { id: 34, title: "e2ff", year: 2021, auth_id: 1001 },
-  //       { id: 36, title: "kjk", year: 2021, auth_id: 1001 },
-  //     ],
-  //   };
-  // }
+  getAuthorsNovelsTablesFromDataBase(database) {
+    return super.GET(database, (db) => {
+      const authorsTable = db.children.authors.firstChild;
+      const novelsTable = db.children.novels.firstChild;
+      const authorsHead = authorsTable.children.thead.firstChild;
+      const novelsHead = novelsTable.children.thead.firstChild;
+      const authorsHeadRow = authorsHead.children;
+      const novelsHeadRow = novelsHead.children;
+      return { authorsTable, novelsTable, authorsHeadRow, novelsHeadRow };
+    });
+  }
 }

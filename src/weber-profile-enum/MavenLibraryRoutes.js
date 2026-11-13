@@ -2,18 +2,20 @@ export const MavenLibraryRoutes = Object.freeze({
   GET: Object.freeze({
     "/api/library/books": async (req, res, controller) =>
       controller.getLibraryBooks(req, res),
+    "/api/library/members": async (req, res, controller) =>
+      controller.getLibraryMembers(req, res),
     "/api/library/memberByIsbn": async (req, res, controller) =>
       controller.getMemberByIsbn(req, res), // Expects { isbn: "..." } in req.body
   }),
   POST: Object.freeze({
     "/api/library/insertMember": async (req, res, controller) =>
-      controller.insertMember(req, res), // Expects { firstName, lastName } in req.body
+      controller.postMemberToMembersTable(req, res), // Expects { firstName, lastName } in req.body
     "/api/library/insertBook": async (req, res, controller) =>
-      controller.insertBook(req, res), // Expects { title, author, isbn } in req.body
+      controller.postBookToBooksTable(req, res), // Expects { title, author, isbn } in req.body
   }),
   PUT: Object.freeze({
     "/api/library/updateBookAuthor": async (req, res, controller) =>
-      controller.updateBookAuthor(req, res), // Expects { author, bookId } in req.body
+      controller.putAuthorInBookById(req, res), // Expects { author, bookId } in req.body
     "/api/library/assignMemberToBook": async (req, res, controller) =>
       controller.assignMemberToBook(req, res), // Expects { memberId, isbn } in req.body
   }),

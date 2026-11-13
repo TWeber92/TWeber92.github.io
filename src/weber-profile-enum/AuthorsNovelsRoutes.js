@@ -14,8 +14,8 @@ export const AuthorsNovelsRoutes = Object.freeze({
       controller.postNovelToCollection(req, res), //args - method, endpoint, body
   }),
   PUT: Object.freeze({
-    "/novels/authors/{authorId}": async (req, res, controller) =>
-      controller.putDataToAuthorById(req, res), //args - method, endpoint, parameter
+    "/novels/authors/{authorId}/{authorName}": async (req, res, controller) =>
+      controller.putNewAuthorNameById(req, res), //args - method, endpoint, parameter
     "/novels": async (req, res, controller) =>
       controller.putNovelData(req, res), //args - method, endpoint, body
   }),

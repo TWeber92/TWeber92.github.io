@@ -1,5 +1,6 @@
 import { Project } from "../weber-profile-entity/Project.js";
 import { TerminalException } from "../weber-profile-exception/WeberProfileError.js";
+import { ProjectFormValidator } from "../weber-profile-validation/ProjectFormValidator.js";
 import { ProjectView } from "../weber-profile-view/ProjectView.js";
 
 export class ProjectService {
@@ -8,12 +9,30 @@ export class ProjectService {
   }
   #repo;
 
-  getProjectPartsWithHtml(html) {
-    //no sense in all the children having the same repo method
-    this.#repo.getProjectPartsWithHtml(html);
+  async putProject(project){
+    this.#repo.putProject(project)
   }
 
-  getEntityProfile(slide, rest, canvas, key) {
+  getProjectPartsWithHtml(html) {
+    this.#repo.getProjectPartsWithHtml(html);
+  }
+  getProjectFromEntity(project) {
+    return this.#repo.getProjectFromEntity(project);
+  }
+  getRowById(table, id) {
+    return this.#repo.getRowById({ table, id });
+  }
+  getRowByColumnValue(table, columnName, val) {
+    return this.#repo.getRowByColumnValue({ table, cn: columnName, val });
+  }
+  getCellValueById(row, columnName) {
+    return this.#repo.getCellValueById({ row, id: columnName });
+  }
+  getRowByCellValue(table, columnName, val) {
+    this.#repo.getRowByCellValue({ table, cn: columnName, val });
+  }
+
+  getEntityProfile(rest, key) {
     const { project, terminal, client, option } = ProjectView.from({
       key,
     });
@@ -24,21 +43,17 @@ export class ProjectService {
       this.#repo.getOption({ opt: nodes.option, val: k }),
     );
     return {
-      // slide,
       options,
-      // canvas,
       nodes,
-      // terminal: nodes.terminal,
-      // project: nodes.projectSlide,
-      // client: nodes[key],
     };
+  }
+  putNewValuesInRow(row, keys, result) {
+    this.#repo.putNewValuesInRow({ row, keys, result });
   }
   putProjectInSlide(button, slide, rest, canvas) {
     const key = button.name;
     this.#repo.deleteCardFromProjectDisplay(slide);
-    const { options, nodes } = this.getEntityProfile(slide, rest, canvas, key);
-    console.log(...nodes);
-    
+    const { options, nodes } = this.getEntityProfile(rest, key);
     const entity = Project.from({
       options,
       slide,
@@ -57,48 +72,27 @@ export class ProjectService {
       method,
       key: project,
       opt: node.option,
-      routes: Object.keys(routes),//this would not be the routes with arrrow function val
+      routes: Object.keys(routes), //this would not be the routes with arrrow function val
     });
   }
   putTableTogether(schemas, db = null) {
     const { table } = ProjectView.from({});
     db = db || this.#repo.getProjectPartsWithHtml(table).database;
-    db.replaceChildren(
-      ...schemas.map((schema, i) =>
-        this.#repo.putTableTogether({ table: db, schema, i }),
-      ),
-    );
+    this.#repo.putNewTablesInDataBase({ db, schemas });
     return db;
   }
 
   putInputControlsInClient(project, endpoint) {
     const hidden = this.#repo.getProjectClient(project).hidden;
-    if (hidden && /\{.*?\}/.test(endpoint))
-      this.#repo.putParmeterInputOnDisplay(project);
+    if (hidden && /\{.*?\}/.test(endpoint)) {
+      const queryParam = this.#repo.putParmeterInputOnDisplay(project);
+      const placeholder = endpoint.slice(endpoint.indexOf("{"));
+      queryParam.placeholder = placeholder.replace(/[{}]/g, "");
+    }
     if (!hidden) this.#repo.deleteParameterInputFromDisplay(project);
   }
-  async handleGetRequest({ project, formatSchema, result }) {
-    const { terminal, database } = this.#repo.getProjectFromEntity(project);
-    if (result.message)
-      return new TerminalException(
-        result.message,
-        result.data,
-        terminal,
-        result.status,
-      );
-    const schema = formatSchema(result);
-    this.putTableTogether(schema, database);
-    this.#repo.putDataInTerminal({
-      terminal,
-      status: 200,
-      data: result,
-      message: "Success",
-    });
-  }
   putClientBodyOnOffDisplay(id) {
-    console.log(id);
-    
-    const project = this.#repo.getProjectFromEntity(id);
+    const project = this.getProjectFromEntity(id);
     const form = project[id];
     this.#repo.putClientBodyOnOffDisplay(form);
   }
@@ -108,5 +102,40 @@ export class ProjectService {
       s: slide,
       p: project,
     });
+  }
+  putRowIntoTable(table, row) {
+    this.#repo.putRowIntoTable({ table, row });
+  }
+  deleteRowFromTable(table, id) {
+    const tbody = table.children.tbody;
+    const rowToDelete = [...tbody.children].find(
+      (row) => row.cells[0].textContent === id.toString(),
+    );
+    if (rowToDelete) rowToDelete.remove();
+  }
+  handleTerminal(project, result) {
+    const { terminal } = this.getProjectFromEntity(project);
+    if (result.info || result.error)
+      return new TerminalException(
+        result.info || result.error,
+        result.data,
+        terminal,
+        result.status,
+      );
+    else
+      this.#repo.putDataInTerminal({
+        terminal,
+        status: 200,
+        data: result,
+        message: "Success",
+      });
+    return { success: true };
+  }
+  handleTextAreaFormat(project, text) {
+    const { terminal } = this.getProjectFromEntity(project);
+    const valid = ProjectFormValidator.validateFormPayload(text, terminal);
+    if (!valid.success) return valid;
+    const parseable = text.replace(/(\w+)(?=\s*:)/g, '"$1"');
+    return parseable;
   }
 }

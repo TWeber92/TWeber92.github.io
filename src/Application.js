@@ -40,7 +40,17 @@ export class Application {
     this.#buildClients();
     controllers.headerController = this.#buildHeader(views.headerView);
     controllers.carouselController = this.#buildCarousel(views.carouselView);
-    controllers.projectController = this.#buildProject(views.projectView);
+    controllers.projectController = this.#buildProject(
+      views.projectView,
+      (v, r) => {
+        controllers.springSecurityController = this.#buildSpringSecurity(v, r);
+        controllers.authorsNovelsController = this.#buildAuthorsNovels(v, r);
+        controllers.cabBookingController = this.#buildCabBooking(v, r);
+        controllers.mavenLibraryController = this.#buildMavenLibrary(v, r);
+        controllers.iotSiteWiseController = this.#buildIoTSiteWise(v, r);
+        controllers.coinApiController = this.#buildCoinApi(v, r);
+      },
+    );
   }
 
   static get controllers() {
@@ -74,18 +84,9 @@ export class Application {
     const service = new CarouselService(repo);
     return new CarouselController(service);
   }
-  #buildProject(view) {
-    const controllers = Application.#controllers;
-    const repo = new ProjectRepository(view);
-    controllers.springSecurityController = this.#buildSpringSecurity(
-      view,
-      repo,
-    );
-    controllers.authorsNovelsController = this.#buildAuthorsNovels(view, repo);
-    controllers.cabBookingController = this.#buildCabBooking(view, repo);
-    controllers.mavenLibraryController = this.#buildMavenLibrary(view, repo);
-    controllers.iotSiteWiseController = this.#buildIoTSiteWise(view, repo);
-    controllers.coinApiController = this.#buildCoinApi(view, repo);
+  #buildProject(view, children) {
+    const repo = new ProjectRepository(view, this.#clients.profileApi);
+    children(view, repo);
     const service = new ProjectService(repo);
     return new ProjectController(service);
   }

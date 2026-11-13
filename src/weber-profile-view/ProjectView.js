@@ -29,14 +29,16 @@ export class ProjectView {
                 </details>`;
     this.#table = `
                 <div id="database">
-                  <table id="table">
-                    <thead id="thead">
-                      <tr><th></th></tr>
-                    </thead>
-                    <tbody id="tbody">
-                      <tr><td></td></tr>
-                    </tbody>
-                  </table>
+                  <div class="table">
+                    <table id="table">
+                      <thead id="thead">
+                        <tr><th></th></tr>
+                      </thead>
+                      <tbody id="tbody">
+                        <tr><td></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>`;
     this.#client = `
                 <form id="project-form" name="${data.key}">

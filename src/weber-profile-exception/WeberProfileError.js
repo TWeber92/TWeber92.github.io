@@ -110,7 +110,7 @@ export class TerminalException extends Error {
     const statusHeader = `[ HTTP ${this.status} ]`;
     const messageLine = this.message ? `${this.message}\n\n` : "";
     const dataLine = this.data ? JSON.stringify(this.data, null, 2) : "";
-    output.textContent = `${statusHeader}\n${messageLine}${dataLine}`;
+    output.firstChild.textContent = `${statusHeader}\n${messageLine}${dataLine}`;
     this.terminal.open = true;
   }
 }

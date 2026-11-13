@@ -8,7 +8,7 @@
   border-radius: 8px;
   overflow: hidden;
 }
-#projectSlide[hidden]{
+#projectSlide[hidden] {
   display: none;
 }
 
@@ -19,18 +19,42 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-content: flex-start; 
+  align-items: flex-start;
   gap: 0.25rem;
 }
 
-#database table {
-  flex: 1 1 100px; 
+#database .table {
+  flex: 1 1 250px;
+  min-width: 0;
+  max-height: 100%;
+  overflow-y: auto;
+}
+#database .table table {
+  width: 100%;
   border-collapse: collapse;
   font-family: monospace;
   table-layout: auto;
 }
 
-#projectSlide th {
+#database::-webkit-scrollbar,
+#database .table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+#database::-webkit-scrollbar:vertical,
+#database .table::-webkit-scrollbar:vertical {
+  display: none;
+  width: 0;
+}
+
+#database::-webkit-scrollbar-thumb,
+#database .table::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+#database th {
   background: #2d2d2d;
   color: #22c55e;
   text-align: left;
@@ -41,13 +65,13 @@
   z-index: 1;
 }
 
-#projectSlide td {
+#database td {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #333;
   color: #d4d4d4;
 }
 
-#projectSlide tr:hover {
+#database tr:hover {
   background: #2a2d2e;
 }
 
@@ -62,17 +86,17 @@
 
 #auth {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   gap: 1rem;
   width: 100%;
   margin-bottom: 0.25rem;
 }
 #textarea {
-  width: 100%; 
+  width: 100%;
 }
 form #controls {
   display: flex;
-  flex-wrap: nowrap; 
+  flex-wrap: nowrap;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
@@ -86,8 +110,8 @@ form #controls {
   font-family: monospace;
   font-size: 0.85rem;
   color: #888;
-  flex: 1 1 200px; 
-  max-width: 300px; 
+  flex: 1 1 200px;
+  max-width: 300px;
 }
 #auth input {
   max-width: 150px;
@@ -96,7 +120,6 @@ form #controls {
 #projectSlide input:focus {
   border-color: #22c55e;
 }
-
 
 #projectSlide select,
 #projectSlide input[type="text"],
@@ -116,17 +139,17 @@ form #controls select[name="rest"],
 form #controls input[name="parameter"],
 form #controls button {
   flex: 0 1 auto;
-  min-width: 35px; 
+  min-width: 35px;
 }
-form #controls select[name="rest"]{
+form #controls select[name="rest"] {
   padding: 0.4rem 0.2rem;
 }
 form #controls input[name="parameter"] {
-  max-width: 75px; 
+  max-width: 75px;
 }
 
 #projectSlide select[name="endpoint"] {
-  flex: 2 1 auto; 
+  flex: 2 1 auto;
   min-width: 50px;
 }
 
@@ -210,11 +233,11 @@ form #controls button {
   color: #22c55e;
 }
 
-#terminal pre code[data-status^="4"] {
+#terminal pre[data-status^="4"] code {
   color: #f59e0b;
 }
 
-#terminal pre code[data-status^="5"] {
+#terminal pre[data-status^="5"] code {
   color: #ef4444;
 }
 

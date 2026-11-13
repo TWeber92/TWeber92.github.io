@@ -21,4 +21,11 @@ export class ProjectController {
     this.#service.putClientBodyOnOffDisplay(req.body.project);
     res.obj(null);
   }
+  handleTextAreaFormat(req, res) {
+    const result = this.#service.handleTextAreaFormat(
+      req.body.project,
+      req.body.payload,
+    );
+    res.obj(result);
+  }
 }

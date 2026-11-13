@@ -29,6 +29,11 @@ export class Logger {
       const entry = Logger.log(data.message, data.meta);
       console.info(`🔵 [INFO] ${entry}`);
     });
+    
+    Logger.on("debug", (data) => {
+      const entry = Logger.log(data.message, data.meta);
+      console.debug(`🟣 [DEBUG] ${entry}`);
+    });
   }
 
   // Helper to format the log

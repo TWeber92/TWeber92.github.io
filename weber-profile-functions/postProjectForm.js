@@ -11,6 +11,9 @@ export const handler = async (e) => {
   const form = e.target;
   const project = form.name;
   const { username, password, rest, endpoint, parameter, body } = form;
+  console.log(parameter.value);
+  
+  const textarea = body[1];
   const method = rest.value;
   const ep = endpoint.value;
   const authHeader =
@@ -18,13 +21,13 @@ export const handler = async (e) => {
       ? `Basic ${btoa(`${username.value}:${password.value}`)}`
       : null;
   const {
+    projectController,
     authorsNovelsController,
     springSecurityController,
     cabBookingController,
     mavenLibraryController,
     coinApiController,
   } = Application.controllers;
-  const res = { obj: (data) => (responseBody = data) };
 
   const req = {
     body: {
@@ -33,10 +36,15 @@ export const handler = async (e) => {
       method,
       endpoint: ep,
       parameter: parameter.value,
-      body: body.value,
+      payload: textarea.value || null,
     },
   };
+  const res = { obj: (data) => (responseBody = data) };
 
+  if (textarea.value) await projectController.handleTextAreaFormat(req, res); //args - payload
+  if (responseBody instanceof TerminalException)
+    return responseBody.toTerminal();
+  else req.body.payload = responseBody ? JSON.parse(responseBody) : "";
   const router = {
     "spring-security": async () =>
       await SpringSecurityRoutes[method][ep](
@@ -55,5 +63,8 @@ export const handler = async (e) => {
   };
 
   await router[project]();
+  console.log(responseBody instanceof TerminalException);
+  
   if (responseBody instanceof TerminalException) responseBody.toTerminal();
 };
+//{"emailId": "updated@example.com"}

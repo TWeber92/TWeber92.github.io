@@ -33,11 +33,11 @@ export const event = async (e) => {
       await router[route]();
   } catch (err) {
     // const err = error.toJSON()
-    Logger.emit("error", {
+    Logger.emit("debug", {
       message: `Unhandled route failure: ${err.message || err}`,
       meta: { route, error: err },
     });
 
-    console.trace(err);
+    // console.trace(err);
   }
 };

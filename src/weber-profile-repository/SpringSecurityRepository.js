@@ -1,4 +1,3 @@
-import { HtmlStore } from "../HtmlStore.js";
 import { DocumentClient } from "../weber-profile-client/DocumentClient.js";
 
 export class SpringSecurityRepository extends DocumentClient {
@@ -16,12 +15,43 @@ export class SpringSecurityRepository extends DocumentClient {
   get entity() {
     return this.#entity;
   }
-  async getInfyBankCustomers(endpoint, method, auth) {
-    return await this.#render.API(endpoint, method, { Authorization: auth });
-  }
-
   async getSecurityTableSchema(project) {
     return await this.#profile.GET(`/api/v1/project?projectName=${project}`);
+  }
+  async getInfyBankCustomers(endpoint, method, auth) {
+    return await this.#render.GET(endpoint, method, { Authorization: auth });
+  }
+
+  async getBankCustomerById(endpoint, method, auth) {
+    return await this.#render.GET(endpoint, method, {
+      Authorization: auth,
+    });
+  }
+  async postCustomerToBank(endpoint, method, auth, payload) {
+    return await this.#render.POST(
+      endpoint,
+      method,
+      {
+        Authorization: auth,
+      },
+      payload,
+    );
+  }
+  async putNewEmailInCustomerById(endpoint, method, auth, payload) {
+    return await this.#render.PUT(
+      endpoint,
+      method,
+      {
+        Authorization: auth,
+      },
+      payload,
+    );
+  }
+  async deleteBankCustomer(endpoint, method, auth) {
+    console.log(endpoint, method, auth);
+    return await this.#render.DELETE(endpoint, method, {
+      Authorization: auth,
+    });
   }
 
   putAuthGroupInClientDisplay(key) {
@@ -32,30 +62,12 @@ export class SpringSecurityRepository extends DocumentClient {
       authGroup.hidden = false;
     });
   }
-
-  // getSecurityTableSchema() {
-  //   return {
-  //     columns: ["Customer ID", "Email", "Name", "Date of Birth"],
-  //     rows: [
-  //       {
-  //         customer_id: 1,
-  //         email: "charles@example.com",
-  //         name: "Charles Smith",
-  //         dob: "1985-04-12",
-  //       },
-  //       {
-  //         customer_id: 2,
-  //         email: "jane@example.com",
-  //         name: "Jane Doe",
-  //         dob: "1990-07-23",
-  //       },
-  //       {
-  //         customer_id: 3,
-  //         email: "robert@example.com",
-  //         name: "Robert Brown",
-  //         dob: "1978-11-05",
-  //       },
-  //     ],
-  //   };
-  // }
+  getSecurityTablesFromDataBase(database) {
+    return super.GET(database, (db) => {
+      const customersTable = db.children.customers.firstChild;
+      const customersHead = customersTable.children.thead.firstChild;
+      const headRow = customersHead.children;
+      return { customersTable, headRow };
+    });
+  }
 }

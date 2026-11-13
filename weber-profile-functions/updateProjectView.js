@@ -12,11 +12,8 @@ export const handler = async (e) => {
   const form = e.target.form;
   const { rest, endpoint, assetsIds } = form;
   const project = form?.name;
-  console.log(project);
-  
   const method = rest.value || null;
   const id = e.target.id;
-  console.log(id);
   const endpoints = {
     "spring-security": SpringSecurityRoutes[method],
     "authors-novels": AuthorsNovelsRoutes[method],

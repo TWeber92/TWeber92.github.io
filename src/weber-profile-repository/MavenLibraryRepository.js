@@ -16,50 +16,51 @@ export class MavenLibraryRepository extends DocumentClient {
     return this.#entity;
   }
 
-  async getLibraryBooks(endpoint, method) {
-    return await this.#render.GET(endpoint, method);
+  getTableRowCount(table) {
+    return super.GET(table.children, ({ tbody }) => {
+      const lastRow = tbody.lastChild;
+      return parseInt(lastRow.cells[0].textContent) ?? 0;
+    });
   }
+  getMavenTablesFromDataBase(database) {
+    return super.GET(database, (db) => {
+      const booksTable = db.children.books.firstChild;
+      const membersTable = db.children.members.firstChild;
+      const membersHead = membersTable.children.thead.firstChild;
+      const headRow = membersHead.children;
+      return { booksTable, membersTable, headRow };
+    });
+  }
+
 
   async getMavenLibraryTableSchema(project) {
     return await this.#profile.GET(`/api/v1/project?projectName=${project}`);
   }
+  async getMemberByIsbn(endpoint, method, payload) {
+    method = "POST";
+    return await this.#render.GET(endpoint, method, {}, payload);
+  }
+  async getLibraryMembers(endpoint, method) {
+    return await this.#render.GET(endpoint, method);
+  }
 
-  // getMavenMembersTableSchema() {
-  //   return {
-  //     columns: ["Member ID", "First Name", "Last Name"],
-  //     rows: [
-  //       { member_id: 1, first_name: "Tad", last_name: "Weber" },
-  //       { member_id: 2, first_name: "Charles", last_name: "Smith" },
-  //       { member_id: 3, first_name: "Jane", last_name: "Doe" },
-  //     ],
-  //   };
-  // }
-  // getMavenBooksTableSchema() {
-  //   return {
-  //     columns: ["ID", "Title", "Author", "ISBN", "Member ID"],
-  //     rows: [
-  //       {
-  //         id: 1,
-  //         title: "The [Great] Adventure",
-  //         author: "J.R.R. Tolkien",
-  //         isbn: "2345678901",
-  //         memberId: 1,
-  //       },
-  //       {
-  //         id: 2,
-  //         title: "Harry Potter",
-  //         author: "JK. Rowling",
-  //         isbn: "1234567890",
-  //         memberId: 2,
-  //       },
-  //       {
-  //         id: 3,
-  //         title: "Climbing for Experts",
-  //         author: "Jane Doe",
-  //         isbn: "0987654321",
-  //         memberId: 1,
-  //       },
-  //     ],
-  //   };
-  // }
+  async getLibraryBooks(endpoint, method) {
+    return await this.#render.GET(endpoint, method);
+  }
+
+  async postBookToBooksTable(endpoint, method, payload) {
+    return await this.#render.POST(endpoint, method, {}, payload);
+  }
+
+  async postMemberToMembersTable(endpoint, method, payload) {
+    return await this.#render.POST(endpoint, method, {}, payload);
+  }
+
+  async putAuthorInBookById(endpoint, method, payload) {
+    return await this.#render.PUT(endpoint, method, {}, payload);
+  }
+
+  async deleteBook(endpoint, method, payload) {
+    return await this.#render.DELETE(endpoint, method, {}, payload);
+  }
 }

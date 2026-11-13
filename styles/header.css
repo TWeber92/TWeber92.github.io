@@ -15,7 +15,7 @@ header {
 }
 
 /* 2. The Title (Terminal Prompt Style) */
-#title {
+header #title {
   margin: 0;
   font-weight: 600;
   letter-spacing: 1px;
@@ -23,7 +23,7 @@ header {
   color: #569cd6; /* Blue accent to match headers */
 }
 
-#title::before {
+header #title::before {
   content: "> "; /* Terminal prompt */
   color: #4ec9b0; /* Green accent */
 }
