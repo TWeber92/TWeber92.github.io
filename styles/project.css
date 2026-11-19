@@ -8,6 +8,8 @@
   border-radius: 8px;
   overflow: hidden;
 }
+#projectSlide #body[hidden],
+#projectSlide button[hidden],
 #projectSlide[hidden] {
   display: none;
 }
@@ -15,8 +17,8 @@
 #database {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
   display: flex;
+  overflow-y: auto;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -35,19 +37,19 @@
   font-family: monospace;
   table-layout: auto;
 }
-
+#dashboard::-webkit-scrollbar,
 #database::-webkit-scrollbar,
 #database .table::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
+#dashboard::-webkit-scrollbar:vertical,
 #database::-webkit-scrollbar:vertical,
 #database .table::-webkit-scrollbar:vertical {
   display: none;
   width: 0;
 }
-
+#dashboard::-webkit-scrollbar-thumb,
 #database::-webkit-scrollbar-thumb,
 #database .table::-webkit-scrollbar-thumb {
   background: #888;

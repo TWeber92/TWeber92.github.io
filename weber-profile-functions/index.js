@@ -4,6 +4,7 @@ import { handler as postProjectView } from "./postProjectView.js";
 import { handler as updateCarouselView } from "./updateCarouselView.js";
 import { handler as updateProjectView } from "./updateProjectView.js";
 import { handler as postProjectForm } from "./postProjectForm.js";
+import { handler as updateSiteWiseView } from "./updateSiteWiseView.js";
 import { Logger } from "../src/weber-profile-utility/Logger.js";
 export const event = async (e) => {
   document.body.style.cursor = "wait !important";
@@ -25,10 +26,14 @@ export const event = async (e) => {
     "click:/select/endpoint": async () => await updateProjectView(e),
     "click:/button/body": async () => await updateProjectView(e),
     "submit:/form/project-form": async () => await postProjectForm(e),
+    "click:/button/line": async () => await updateSiteWiseView(e),
+    "change:/input/line": async () => await updateSiteWiseView(e),
+    "change:/input/machine": async () => await updateSiteWiseView(e),
+    "click:/select/actions": async () => await updateSiteWiseView(e),
   };
 
   try {
-    // if (type !== "mouseout") console.log(route);
+    if (type !== "mouseout") console.log(route);
     if (router[route])
       await router[route]();
   } catch (err) {

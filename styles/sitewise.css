@@ -1,0 +1,176 @@
+/* 1. Layout Base */
+#dashboard {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. The Container (Stage 1 Default: Centered Launcher) */
+#staging {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+/* Stage 1 Buttons: Prominent centered selection cards */
+#staging > button#line {
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 380px;
+  background: #18181b;
+  color: #f4f4f5;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  font-family: monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+#staging > button#line:hover {
+  background: #27272a;
+  border-color: #22c55e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(34, 197, 94, 0.15);
+}
+
+/* ==========================================
+   STAGE 2: ACTIVE DASHBOARD MODE (:has)
+   ========================================== */
+
+#staging:has(#assets) {
+  justify-content: flex-start;
+  align-items: center; /* Centers the grid container inside #staging */
+  padding: 0;
+  gap: 1.5rem;
+  width: 100%;
+}
+/* #assets Form Container: True Dashboard Grid */
+#staging #assets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Sleek Circular Back Button */
+#staging button#back {
+  align-self: flex-start;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  background: #18181b;
+  color: #fff;
+  border: 1px solid #fff;
+  font-family: monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#staging button#back:hover {
+  background: #27272a;
+  border-color: #22c55e;
+  color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+/* Stage 2 Equipment Cards / Labels */
+#staging label {
+  background: #18181b;
+  color: #d4d4d4;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-family: monospace;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#staging label:hover {
+  background: #27272a;
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+/* Active/Checked Card State */
+#staging label:has(input:checked) {
+  background: #142416;
+  border-color: #22c55e;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.15);
+}
+
+#staging label input[type="radio"] {
+  accent-color: #22c55e;
+}
+
+/* 5. Form Width Safeguards */
+#controls {
+  flex-wrap: wrap;
+  width: 100%;
+}
+#projectSlide select,
+#projectSlide input[type="text"] {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* --- Industrial Status Styling --- */
+
+/* Healthy / Running (Status 1) */
+#staging label:has(input.status-1) {
+  border: 5px solid #16a34a;
+}
+
+#staging label:has(input.status-1):hover {
+  border-color: #16a34a;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+}
+
+/* Fault / Stopped / Down (Status 0) */
+#staging label:has(input.status-0) {
+  border-color: #ef4444; /* Red warning border */
+  background: #1c1313; /* Subtly tinted dark background */
+}
+
+#staging label:has(input.status-0):hover {
+  border-color: #dc2626;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+#staging #tile {
+  border-color: #22c55e;
+}
+#staging #tile[data-status="warning"] {
+  border-color: #f59e0b;
+}
+#staging #tile[data-status="critical"] {
+  border-color: #ef4444;
+}

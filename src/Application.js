@@ -22,6 +22,7 @@ import { SpringSecurityRepository } from "./weber-profile-repository/SpringSecur
 import { AuthorsNovelsService } from "./weber-profile-service/AuthorsNovelsService.js";
 import { CabBookingService } from "./weber-profile-service/CabBookingService.js";
 import { CarouselService } from "./weber-profile-service/CarouselService.js";
+import { CoinApiService } from "./weber-profile-service/CoinApiService.js";
 import { HeaderService } from "./weber-profile-service/HeaderService.js";
 import { IoTSiteWiseService } from "./weber-profile-service/IoTSiteWiseService.js";
 import { MavenLibraryService } from "./weber-profile-service/MavenLibraryService.js";
@@ -141,7 +142,7 @@ export class Application {
       this.#clients.coinApi,
       this.#clients.profileApi,
     );
-    const service = new CoinApiRepository(repo, pRepo);
+    const service = new CoinApiService(repo, pRepo);
     return new CoinApiController(service);
   }
 }

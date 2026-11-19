@@ -5,13 +5,12 @@ export class ProjectRepository extends DocumentClient {
   constructor(view, profile) {
     super();
     this.#entity = view.entity;
-    this.#profile = profile
+    this.#profile = profile;
   }
 
   #entity;
   #profile;
 
-  
   async putProject(project) {
     return await this.#profile.PUT(
       `/api/v1/project`,
@@ -28,13 +27,14 @@ export class ProjectRepository extends DocumentClient {
     return super.GET(context, ({ opt, val }) => {
       const option = opt.cloneNode(false);
       option.value = val;
+      option.dataset.id = val
       option.textContent = val;
       return option;
     });
   }
-  getProjectClient(formId) {
-    return super.GET(formId, (id) => this.#entity[id].children[id].parameter);
-  }
+  // getProjectClientForm(formId) {
+  //   return super.GET(formId, (id) => this.#entity[id].children[id]);
+  // }
   getProjectFromEntity(project) {
     return super.GET(project, (id) => this.#entity[id].children);
   }

@@ -9,12 +9,12 @@ export class ProjectService {
   }
   #repo;
 
-  async putProject(project){
-    this.#repo.putProject(project)
+  async putProject(project) {
+    this.#repo.putProject(project);
   }
 
   getProjectPartsWithHtml(html) {
-    this.#repo.getProjectPartsWithHtml(html);
+    return this.#repo.getProjectPartsWithHtml(html);
   }
   getProjectFromEntity(project) {
     return this.#repo.getProjectFromEntity(project);
@@ -32,16 +32,20 @@ export class ProjectService {
     this.#repo.getRowByCellValue({ table, cn: columnName, val });
   }
 
+  getOption(val) {
+    const { option } = ProjectView.from({});
+    const nodes = this.#repo.getProjectPartsWithHtml(option);
+    return this.#repo.getOption({ opt: nodes.option, val });
+  }
+
   getEntityProfile(rest, key) {
-    const { project, terminal, client, option } = ProjectView.from({
+    const { project, terminal, client } = ProjectView.from({
       key,
     });
     const nodes = this.#repo.getProjectPartsWithHtml(
-      project + terminal + client + option,
+      project + terminal + client,
     );
-    const options = rest.map((k) =>
-      this.#repo.getOption({ opt: nodes.option, val: k }),
-    );
+    const options = rest.map((k) => this.getOption(k));
     return {
       options,
       nodes,

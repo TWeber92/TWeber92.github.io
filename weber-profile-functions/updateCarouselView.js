@@ -13,5 +13,5 @@ export const handler = async (e) => {
       await carouselController.postPreviousProjectSlide(req, res), // args - none
   };
 
-  router[direction]();
+  await router[direction]();
 };

@@ -1,6 +1,6 @@
 export const CoinApiRoutes = Object.freeze({
   GET: Object.freeze({
-    "/api/coin": async (req, res, controller) =>
+    "/api/coin/stateName/{stateName}": async (req, res, controller) =>
       controller.getCoinByStateName(req, res), // Expects { stateName } in req.body or query
     "/api/me": async (req, res, controller) =>
       controller.getCurrentUser(req, res), // Handles session cookie natively
@@ -13,7 +13,7 @@ export const CoinApiRoutes = Object.freeze({
     "/api/login": async (req, res, controller) =>
       controller.loginUser(req, res), // Expects { email, password }
     "/api/pin": async (req, res, controller) =>
-      controller.requestPasswordResetPin(req, res), // Expects { email }
+      controller.getPasswordResetPin(req, res), // Expects { email }
     "/api/postCoins": async (req, res, controller) =>
       controller.postAllStateCoins(req, res), // Requires Basic Auth headers
   }),

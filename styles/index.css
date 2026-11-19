@@ -1,6 +1,7 @@
 @import "./header.css";
 @import "./carousel.css";
 @import "./project.css";
+@import "./sitewise.css";
 
 body {
   height: 100%;

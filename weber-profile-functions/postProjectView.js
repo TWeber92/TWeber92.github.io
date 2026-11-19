@@ -8,16 +8,19 @@ export const handler = async (e) => {
     cabBookingController,
     mavenLibraryController,
     coinApiController,
-    sitewiseController,
+    iotSiteWiseController,
     carouselController,
   } = Application.controllers;
   
   const button = e.target;
+  console.log(button.name);
 
   const req = { body: { button } };
   const res = { obj: (data) => (responseBody = data) };
   await carouselController.getCarouselSlides(req, res); //args - none
   req.body.carousel = responseBody.to(); //CarouselDTO obj
+  console.log(button.name);
+  
 
   const router = {
     "spring-security": async () =>
@@ -31,8 +34,8 @@ export const handler = async (e) => {
     "coin-api": async () =>
       await coinApiController.putCoinApiProjectInSlide(req, res), //args - button, carousel.slides
     "iot-sitewise": async () =>
-      await sitewiseController.putSitewiseProjectInSlide(req, res), //args - button, carousel.slides
+      await iotSiteWiseController.putIoTSiteWiseProjectInSlide(req, res), //args - button, carousel.slides
   };
 
-  router[button.name]();
+  await router[button.name]();
 };

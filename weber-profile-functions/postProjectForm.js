@@ -63,8 +63,6 @@ export const handler = async (e) => {
   };
 
   await router[project]();
-  console.log(responseBody instanceof TerminalException);
   
   if (responseBody instanceof TerminalException) responseBody.toTerminal();
 };
-//{"emailId": "updated@example.com"}
